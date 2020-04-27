@@ -1,0 +1,8 @@
+# Node modules
+node_modules
+
+# Environmental variables
+.env
+
+# Notes on my work process
+process.md
