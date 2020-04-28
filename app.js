@@ -6,14 +6,9 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import compression from 'compression';
 import helmet from 'helmet';
-
-import indexRouter from './routes/index';
-import usersRouter from './routes/users';
+import routes from './routes';
 
 const app = express();
-
-app.use(compression());
-app.use(helmet());
 
 // Setup mongoose connection
 import mongoose from 'mongoose';
@@ -27,6 +22,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // Middleware
+app.use(compression());
+app.use(helmet());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -36,8 +33,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Passport Stuff
 
 // Routes
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/users',     routes.users);
+app.use('/recipes',   routes.recipes);
+app.use('/comments',  routes.comments);
+app.use('/sessions',  routes.sessions);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -54,7 +53,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 
 module.exports = app;
 

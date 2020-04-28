@@ -1,9 +1,11 @@
-var express = require('express');
-var router = express.Router();
+import users    from './users';
+import recipes  from './recipes';
+import comments from './comments';
+import sessions from './sessions';
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-module.exports = router;
+export default {
+  users,
+  recipes,
+  comments,
+  sessions
+}
