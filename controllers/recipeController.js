@@ -30,13 +30,13 @@ const createRecipe = [
       ingredients: req.body.ingredients,
       steps: req.body.steps,
     })
+    req.body.intro ? (recipe.intro = req.body.intro) : null;
+    req.body.image ? (recipe.image = req.body.image) : null;
     if (!errors.isEmpty()) {
       res.send({ recipe: recipe, errors: errors.array() });
       return;
     }
     else {
-      req.body.intro ? (recipe.intro = req.body.intro) : null;
-      req.body.image ? (recipe.image = req.body.image) : null;
       recipe.save(function(err) {
         if (err) { return next(err) }
         res.send(recipe);
@@ -86,13 +86,13 @@ const updateRecipe = [
 
 const destroyRecipe = (req, res, next) => {
   Recipe.findById(req.params.id)
-  .exec(function(err, recipe) {
-    if (err) { return next(err) }
-    Recipe.findByIdAndRemove(req.body.recipeid, function deleteRecipe(err) {
+    .exec(function(err, recipe) {
       if (err) { return next(err) }
-      res.send('recipe deleted')
+      Recipe.findByIdAndRemove(req.body.recipeid, function deleteRecipe(err) {
+        if (err) { return next(err) }
+        res.send('recipe deleted')
+      })
     })
-  })
 }
 
 const showRecipe = (req, res, next) => {
