@@ -11,11 +11,7 @@ import routes from './routes';
 const app = express();
 
 // Setup mongoose connection
-import mongoose from 'mongoose';
-const mongoDB = process.env.MONGODB_URI
-mongoose.connect(mongoDB, { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true });
-const db = mongoose.connection
-db.on('error', console.error.bind(console, 'MongoDB connection error'));
+require('./config/database');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
