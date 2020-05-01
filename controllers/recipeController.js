@@ -1,4 +1,7 @@
 import Recipe from '../models/recipe';
+
+// import mongoose from 'mongoose';
+// const Recipe = mongoose.model('Recipe');
 import { body, validationResult } from 'express-validator';
 
 const indexRecipes = (req, res, next) => {
@@ -8,10 +11,7 @@ const indexRecipes = (req, res, next) => {
     res.send(recipes);
     return;
   })
-}
 
-const newRecipe = (req, res, next) => {
-  res.send('new recipe')
 }
 
 const createRecipe = [
@@ -44,11 +44,6 @@ const createRecipe = [
     }
   }
 ];
-
-
-const editRecipe = (req, res, next) => {
-  res.send('edit recipe form')
-}
 
 const updateRecipe = [
   body("title", "Title is required").trim().isLength({ min: 1 }),
@@ -110,9 +105,7 @@ const showRecipe = (req, res, next) => {
 
 export default {
   indexRecipes,
-  newRecipe,
   createRecipe,
-  editRecipe,
   updateRecipe,
   destroyRecipe,
   showRecipe

@@ -6,11 +6,7 @@ const router = Router();
 // All recipes
 router.get('/',         recipeController.indexRecipes);
 
-router.get('/new',      recipeController.newRecipe);
-
 router.post('/',        recipeController.createRecipe);
-
-router.get('/:id/edit', recipeController.editRecipe);
 
 router.put('/:id',      recipeController.updateRecipe);
 

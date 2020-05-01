@@ -1,22 +1,60 @@
+import Comment from '../models/comment';
+import { body, validationResult } from 'express-validator';
+
 const indexComments = (req, res, next) => {
-  res.send('comments index');
+  Comment.find({})
+  .exec((err, comments) => {
+    if (err) {
+      return next(err);
+    }
+    res.send(comments);
+    return;
+  });
 }
 
-const newComment = (req, res, next) => {
-  res.send('new comment form');
-}
-
-const createComment = (req, res, next) => {
-  res.send('create new comment');
-}
+const createComment = [
+  body('content', 'Content is required').trim().isLength({ min: 1 }),
+  body('name').escape(),
+  body('recipe', 'Recipe is required').trim().isLength({ min: 1 }),
+  
+  (req, res, next) => {
+    const errors = validationResult(req);
+    const comment = new Comment({
+      content: req.body.content,
+      name: req.body.name,
+      created: Date.now(),
+      recipe: req.body.recipe
+    });
+    if (!errors.isEmpty()) {
+      res.send({ comment: comment, errors: errors.array() });
+      return;
+    }
+    comment.save(err => {
+      if (err) {
+        return next(err);
+      }
+      res.send(comment);
+    })
+  }
+];
 
 const destroyComment = (req, res, next) => {
-  res.send('destroy comment');
+  Comment.findById(req.params.id)
+  .exec((err, comment) => {
+    if (err) {
+      return next(err);
+    }
+    Comment.findByIdAndRemove(req.body.commentid, function deleteComment(err) {
+      if (err) {
+        return next(err);
+      }
+      res.send('comment deleted');
+    })
+  })
 }
 
 export default {
   indexComments,
-  newComment,
   createComment,
   destroyComment,
 }
