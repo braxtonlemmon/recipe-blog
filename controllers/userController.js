@@ -1,10 +1,32 @@
-const newUser = (req, res, next) => {
-  res.send('new user');
-}
+const mongoose = require('mongoose');
+const User = require('../models/user');
+const passport = require('passport');
+import { body, validationResult } from 'express-validator';
+import bcrypt from 'bcrypt';
 
-const createUser = (req, res, next) => {
-  res.send('create user');
-}
+const createUser = [
+  body('username', 'username is required').trim().isLength({ min: 1 }),
+  body('password', 'password is required').trim().isLength({ min: 1 }),
+  body('*').escape(),
+  (req, res, next) => {
+    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+      const errors = validationResult(req);
+      const user = new User({
+        username: req.body.username,
+        password: hashedPassword
+      });
+      if (!errors.isEmpty()) {
+        res.send({ user: user, errors: errors.array() });
+        return;
+      } else {
+        user.save(err => {
+          if (err) { return next(err); }
+          res.send('user created');
+        })
+      }
+    })
+  }
+]
 
 const editUser = (req, res, next) => {
   res.send('edit user');
@@ -19,13 +41,20 @@ const destroyUser = (req, res, next) => {
 }
 
 const showUser = (req, res, next) => {
-  res.send('show user');
+  User.findById(req.params.id)
+    .then(user => {
+      if (!user) {
+        return res.send('user not found');
+      }
+      res.send(user);
+    })
+    .catch(err => {
+      return next(err);
+    })
 }
 
 export default {
-  newUser,
   createUser,
-  editUser,
   updateUser,
   destroyUser,
   showUser,

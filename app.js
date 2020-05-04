@@ -7,15 +7,19 @@ import logger from 'morgan';
 import compression from 'compression';
 import helmet from 'helmet';
 import routes from './routes';
+import passport from 'passport';
 
 const app = express();
 
 // Setup mongoose connection
 require('./config/database');
+require('./config/passport');
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+
+// Passport Stuff
+app.use(passport.initialize());
 
 // Middleware
 app.use(compression());
@@ -26,11 +30,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Passport Stuff
-
 // Routes
+app.get('/protected', passport.authenticate('jwt', { session: false }), (req, res) => {
+  res.send('i\'m protected');
+})
+
 app.use('/users',     routes.users);
-app.use('/recipes',   routes.recipes);
+app.use('/recipes',   passport.authenticate('jwt', { session: false }), routes.recipes);
 app.use('/comments',  routes.comments);
 app.use('/sessions',  routes.sessions);
 

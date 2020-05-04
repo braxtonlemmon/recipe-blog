@@ -8,6 +8,7 @@
     "serverstart": "DEBUG=recipe-blog:* npm run devstart"
   },
   "dependencies": {
+    "bcrypt": "^4.0.1",
     "compression": "^1.7.4",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -17,10 +18,14 @@
     "express-validator": "^6.4.0",
     "helmet": "^3.22.0",
     "http-errors": "~1.6.3",
+    "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "mongodb": "^3.5.6",
     "mongoose": "^5.9.10",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
