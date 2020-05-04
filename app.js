@@ -31,14 +31,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
-app.get('/protected', passport.authenticate('jwt', { session: false }), (req, res) => {
-  res.send('i\'m protected');
-})
-
 app.use('/users',     routes.users);
-app.use('/recipes',   passport.authenticate('jwt', { session: false }), routes.recipes);
+app.use('/recipes', routes.recipes);
+app.use('/auth', routes.auth);
 app.use('/comments',  routes.comments);
-app.use('/sessions',  routes.sessions);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

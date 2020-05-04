@@ -1,6 +1,4 @@
-const mongoose = require('mongoose');
 const User = require('../models/user');
-const passport = require('passport');
 import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 
@@ -27,10 +25,6 @@ const createUser = [
     })
   }
 ]
-
-const editUser = (req, res, next) => {
-  res.send('edit user');
-}
 
 const updateUser = (req, res, next) => {
   res.send('update user');
