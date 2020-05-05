@@ -1,8 +1,18 @@
 import Comment from '../models/comment';
 import { body, validationResult } from 'express-validator';
 
+const recipeComments = (req, res, next) => {
+  Comment.find({ recipe: req.params.recipeid })
+  .exec((err, comments) => {
+    if (err) {
+      return next(err);
+    }
+    return res.json({ success: true, data: comments });
+  });
+}
+
 const indexComments = (req, res, next) => {
-  Comment.find({})
+  Comment.find({  })
   .exec((err, comments) => {
     if (err) {
       return next(err);
@@ -54,6 +64,7 @@ const destroyComment = (req, res, next) => {
 }
 
 export default {
+  recipeComments,
   indexComments,
   createComment,
   destroyComment,

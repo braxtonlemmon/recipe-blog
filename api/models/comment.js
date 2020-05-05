@@ -1,5 +1,6 @@
-import moment from 'moment';
-import mongoose from 'mongoose';
+const moment = require('moment');
+const mongoose = require('mongoose');
+
 const Schema = mongoose.Schema;
 
 const CommentSchema = new Schema({
@@ -8,6 +9,9 @@ const CommentSchema = new Schema({
   created: { type: Date, required: true },
   recipe:  { type: Schema.Types.ObjectId, ref: 'User', required: true }
 });
+
+CommentSchema.set('toObject', { virtuals: true });
+CommentSchema.set('toJSON', { virtuals: true })
 
 CommentSchema.virtual('dateFormatted')
 .get(function () {

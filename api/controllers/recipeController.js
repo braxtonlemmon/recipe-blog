@@ -1,19 +1,25 @@
 import Recipe from '../models/recipe';
-
-// import mongoose from 'mongoose';
-// const Recipe = mongoose.model('Recipe');
 import { body, validationResult } from 'express-validator';
 
 const indexRecipes = (req, res, next) => {
-  Recipe.find({})
-  .exec(function(err, recipes) {
-    if (err) { return next(err) }
-    res.send(recipes);
-    return;
-  })
-
+  Recipe.find((err, data) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
 }
 
+const showRecipe = (req, res, next) => {
+  Recipe.findById(req.params.id)
+  .exec(function(err, recipe) {
+    if (err) { return next(err) }
+    if (recipe === null) {
+      const err = new Error('Recipe not found');
+      err.status = 404;
+      return next(err);
+    }
+    return res.json({ success: true, data: recipe });
+  });
+};
 const createRecipe = [
   body('title', 'Title is required').trim().isLength({ min: 1 }),
   body('ingredients', 'Ingredients are required.').exists(),
@@ -90,18 +96,6 @@ const destroyRecipe = (req, res, next) => {
   })
 }
 
-const showRecipe = (req, res, next) => {
-  Recipe.findById(req.params.id)
-  .exec(function(err, recipe) {
-    if (err) { return next(err) }
-    if (recipe === null) {
-      const err = new Error('Recipe not found');
-      err.status = 404;
-      return next(err);
-    }
-    res.send(recipe);
-  });
-};
 
 export default {
   indexRecipes,

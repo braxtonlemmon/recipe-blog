@@ -8,6 +8,7 @@ import compression from 'compression';
 import helmet from 'helmet';
 import routes from './routes';
 import passport from 'passport';
+import cors from 'cors';
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.set("view engine", "ejs");
 app.use(passport.initialize());
 
 // Middleware
+app.use(cors());
 app.use(compression());
 app.use(helmet());
 app.use(logger('dev'));
