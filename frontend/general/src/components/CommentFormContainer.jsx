@@ -19,6 +19,7 @@ function CommentFormContainer(props) {
       method: 'POST',
       headers: {
         Accept: 'application/json',
+
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -28,7 +29,7 @@ function CommentFormContainer(props) {
       })
     })
     .then(response => {
-      if (response.ok) {
+      if (response.ok && response.status === 200) {
         props.getComments(props.recipe._id);
         return response.json();
       }

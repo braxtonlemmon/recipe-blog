@@ -1,6 +1,7 @@
 import { body, validationResult } from 'express-validator';
 import User from '../models/user';
 import utils from '../lib/utils';
+import issueJWT from '../lib/utils';
 import bcrypt from 'bcrypt';
 
 const login = [
@@ -19,13 +20,17 @@ const login = [
         }
         bcrypt.compare(req.body.password, user.password, (err, result) => {
           if (result) {
-            const token = utils.issueJWT(user);
-            res.send({ token: token.token, expires: token.expires });
+            const token = issueJWT(user);
+            // const token = utils.issueJWT(user);
+            res.cookie('token', token, { httpOnly: true, secure: false });
+            res.json({ token: token, name: user.username })
+            // res.json({ token: token.token, expires: token.expires, name: user.username });
           } else {
             res.send('incorrect password!');
           }
         })
       })
+
       .catch(err => {
         return res.status(401).send({ err: err });
       });

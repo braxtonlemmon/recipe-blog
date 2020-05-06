@@ -23,7 +23,13 @@ app.set("view engine", "ejs");
 app.use(passport.initialize());
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:3001'
+  ],
+  credentials: true
+}));
 app.use(compression());
 app.use(helmet());
 app.use(logger('dev'));
@@ -37,6 +43,17 @@ app.use('/users',     routes.users);
 app.use('/recipes', routes.recipes);
 app.use('/auth', routes.auth);
 app.use('/comments',  routes.comments);
+app.get('/protected', passport.authenticate('jwt', { session: false }), (req, res) => {
+  console.log('yo you made it');
+  res.send('yo you made it');
+})
+app.get('/unprotected', (req, res) => {
+  res.send('coolio man');
+});
+// app.get('/protected', (req, res) => {
+//   console.log('yo you made it');
+//   res.send('yo you made it');
+// })
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

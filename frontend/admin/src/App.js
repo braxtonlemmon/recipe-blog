@@ -9,41 +9,51 @@ import RecipeFormContainer from './components/RecipeFormContainer';
 import Home from './components/Home';
 
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from 'react-router-dom';
 
+const Wrapper = styled.div`
+  display: flex;
+`;
+
+const Main = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+`;
+
 function App() {
-  const [apiResponse, setApiResponse] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showRecipeNew, setShowRecipeNew] = useState(false);
   const [showAllRecipes, setShowAllRecipes] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
-  const callAPI = () => {
-    fetch('/recipes')
-    .then(res => res.text())
-    .then(res => setApiResponse(res))
+
+
+  const handleLogin = (name) => {
+    setIsLoggedIn(true);
+    setCurrentUser(name);
   }
 
-  useEffect(() => {
-    callAPI();
-  });
+  const handleClick = () => {
+    fetch('/protected', {
+      credentials: 'include'
+    })
+    .then(res => res.json())
+    .then(data => console.log(data));
+  }
 
-  const Wrapper = styled.div`
-    display: flex;
-  `;
-
-  const Main = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 100px;
-  `;
-
+  const handleOther = () => {
+    fetch('/unprotected', {
+      credentials: "include"
+    })
+    .then(res => res.json())
+    .then(data => console.log(data));
+  }
+  
   return (
     <Wrapper>
       <Reset />
@@ -51,11 +61,15 @@ function App() {
       <Header 
         isLoggedIn={isLoggedIn}
       />
+      <button onClick={handleClick}>Test</button>
+      <button onClick={handleOther}>Again</button>
       <Main>
         <p>Logged in as: {currentUser ? currentUser : 'No one'}</p>
           <Switch>
             <Route path="/login">
-              <LoginFormContainer />
+              <LoginFormContainer 
+                handleLogin={handleLogin}
+              />
             </Route>
             <Route path="/recipes">
               <Recipes />
