@@ -15,7 +15,7 @@ function CommentFormContainer(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setData({ name: '', content: '' });
-    fetch('http://localhost:9000/comments/', {
+    fetch('/comments/', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

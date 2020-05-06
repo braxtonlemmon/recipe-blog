@@ -1,12 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import Header from './components/Header';
+import styled from 'styled-components';
+import { Reset } from 'styled-reset';
+import GlobalStyle from './GlobalStyle';
+import LoginFormContainer from './components/LoginFormContainer';
+import Recipes from './components/Recipes';
+import RecipeFormContainer from './components/RecipeFormContainer';
+import Home from './components/Home';
 
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom';
 
 function App() {
   const [apiResponse, setApiResponse] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRecipeNew, setShowRecipeNew] = useState(false);
+  const [showAllRecipes, setShowAllRecipes] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const callAPI = () => {
-    fetch('http://localhost:9000/recipes')
+    fetch('/recipes')
     .then(res => res.text())
     .then(res => setApiResponse(res))
   }
@@ -15,25 +32,45 @@ function App() {
     callAPI();
   });
 
+  const Wrapper = styled.div`
+    display: flex;
+  `;
+
+  const Main = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+  `;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <p>{apiResponse}</p>
-        <p>hey</p>
-      </header>
-    </div>
+    <Wrapper>
+      <Reset />
+      <GlobalStyle />
+      <Header 
+        isLoggedIn={isLoggedIn}
+      />
+      <Main>
+        <p>Logged in as: {currentUser ? currentUser : 'No one'}</p>
+          <Switch>
+            <Route path="/login">
+              <LoginFormContainer />
+            </Route>
+            <Route path="/recipes">
+              <Recipes />
+            </Route>
+            <Route path="/new">
+              <RecipeFormContainer />
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+
+
+      </Main>
+    </Wrapper>
   );
 }
 

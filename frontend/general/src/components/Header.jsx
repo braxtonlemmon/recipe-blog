@@ -33,6 +33,7 @@ const Button = styled.button`
   &:hover {
     background: lightyellow;
   }
+  outline: none;
 `;
 
 function Header(props) {

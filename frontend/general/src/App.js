@@ -30,7 +30,7 @@ function App() {
   const [selectedComments, setSelectedComments] = useState([]);
 
   const getRecipes = () => {
-    fetch('http://localhost:9000/recipes')
+    fetch('/recipes')
     .then(data => data.json())
     .then(res => {
       setRecipes(res.data);
@@ -38,7 +38,7 @@ function App() {
   }
 
   const handleRecipeClick = (id) => {
-    fetch(`http://localhost:9000/recipes/${id}`)
+    fetch(`/recipes/${id}`)
     .then(data => data.json())
     .then(res => {
       setSelectedRecipe(res.data);
@@ -51,7 +51,7 @@ function App() {
   }
 
   const getComments = (id) => {
-    fetch(`http://localhost:9000/comments/${id}`)
+    fetch(`/comments/${id}`)
     .then(data => data.json())
     .then(res => {
       setSelectedComments(res.data);
