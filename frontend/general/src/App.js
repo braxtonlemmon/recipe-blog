@@ -54,7 +54,6 @@ function App() {
     fetch(`http://localhost:9000/comments/${id}`)
     .then(data => data.json())
     .then(res => {
-      console.log(res.data);
       setSelectedComments(res.data);
     })
   }
@@ -88,6 +87,7 @@ function App() {
           <RecipePage 
             recipe={selectedRecipe} 
             comments={selectedComments}
+            getComments={getComments}
           />   
         }
       </Main>

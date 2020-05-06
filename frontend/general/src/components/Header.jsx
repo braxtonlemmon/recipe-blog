@@ -13,10 +13,14 @@ const HeaderBar = styled.div`
   align-items: center;
   justify-content: space-between;
   border-bottom: 4px dashed black;
+  z-index: 10;
 `;
 
 const H1 = styled.h1`
-  font-size: 2em;
+  font-size: 1.5em;
+  @media (min-width: 600px) {
+    font-size: 2.2em;
+  }
 `;
 
 const Button = styled.button`

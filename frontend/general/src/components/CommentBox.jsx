@@ -36,12 +36,12 @@ const CommentRow = styled.div`
 function CommentBox(props) {
   const generateComments = () => {
     let allComments = [];
-    props.comments.map(comment => {
-      allComments.push(
-        <CommentRow>
-          <div class="comment-info">
-            <span class="comment-name">{comment.name.toUpperCase()}</span>
-            <span class="comment-date">{comment.dateFormatted}</span>
+    props.comments.map((comment, i) => {
+      return allComments.push(
+        <CommentRow key={i}>
+          <div className="comment-info">
+            <span className="comment-name">{comment.name.toUpperCase()}</span>
+            <span className="comment-date">{comment.dateFormatted}</span>
           </div>
 
           <p>{comment.content}</p>
@@ -54,11 +54,11 @@ function CommentBox(props) {
   return(
     <Wrapper>
       <h2>COMMENTS</h2>
-      <p>{
+      <div>{
         props.comments.length === 0 ?
         '- No comments yet -' :
         generateComments()}
-      </p>
+      </div>
     </Wrapper>
   )
 }

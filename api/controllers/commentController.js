@@ -23,7 +23,7 @@ const indexComments = (req, res, next) => {
 }
 
 const createComment = [
-  body('content', 'Content is required').trim().isLength({ min: 1 }),
+  body('content', 'Content is required').trim().isLength({ min: 1, max: 1000 }),
   body('name').escape(),
   body('recipe', 'Recipe is required').trim().isLength({ min: 1 }),
   
@@ -31,7 +31,7 @@ const createComment = [
     const errors = validationResult(req);
     const comment = new Comment({
       content: req.body.content,
-      name: req.body.name,
+      name: req.body.name === '' ? 'Anonymous' : req.body.name,
       created: Date.now(),
       recipe: req.body.recipe
     });
