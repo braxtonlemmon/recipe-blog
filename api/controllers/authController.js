@@ -22,11 +22,12 @@ const login = [
           if (result) {
             const token = issueJWT(user);
             // const token = utils.issueJWT(user);
-            res.cookie('token', token, { httpOnly: true, secure: false });
-            res.json({ token: token, name: user.username })
+            res.cookie('token', token, { maxAge: 30000, httpOnly: true, secure: false });
+            console.log(token);
+            return res.json({ token: token, name: user.username })
             // res.json({ token: token.token, expires: token.expires, name: user.username });
           } else {
-            res.send('incorrect password!');
+            return res.send('incorrect password!');
           }
         })
       })
@@ -37,6 +38,11 @@ const login = [
   }
 ]
 
+const logout = (req, res, next) => {
+  req.logout();
+}
+
 export default {
-  login
+  login,
+  logout
 }

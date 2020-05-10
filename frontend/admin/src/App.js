@@ -35,6 +35,7 @@ function App() {
 
   const handleLogin = (name) => {
     setIsLoggedIn(true);
+    setShowLogin(false);
     setCurrentUser(name);
   }
 
@@ -53,7 +54,11 @@ function App() {
     .then(res => res.json())
     .then(data => console.log(data));
   }
-  
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setCurrentUser(null);
+  }
   return (
     <Wrapper>
       <Reset />
@@ -63,6 +68,7 @@ function App() {
       />
       <button onClick={handleClick}>Test</button>
       <button onClick={handleOther}>Again</button>
+      <button onClick={handleLogout}>Log out</button>
       <Main>
         <p>Logged in as: {currentUser ? currentUser : 'No one'}</p>
           <Switch>
