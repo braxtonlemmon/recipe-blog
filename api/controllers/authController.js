@@ -11,7 +11,7 @@ const login = [
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.send({ errors: errors.array() });
+      return res.status(400).send({ errors: errors.array() });
     }
     User.findOne({ username: req.body.username })
       .then(user => {
@@ -22,7 +22,7 @@ const login = [
           if (result) {
             const token = issueJWT(user);
             // const token = utils.issueJWT(user);
-            res.cookie('token', token, { maxAge: 30000, httpOnly: true, secure: false });
+            res.cookie('token', token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true, secure: false });
             console.log(token);
             return res.json({ token: token, name: user.username })
             // res.json({ token: token.token, expires: token.expires, name: user.username });
@@ -39,7 +39,8 @@ const login = [
 ]
 
 const logout = (req, res, next) => {
-  req.logout();
+  res.clearCookie('token');
+  next();
 }
 
 export default {

@@ -15,7 +15,6 @@ const FormWrapper = styled.form`
   }
 `;
 
-
 function LoginFormComponent(props) {
   return (
     <FormWrapper name="loginForm">
@@ -38,6 +37,7 @@ function LoginFormComponent(props) {
         id="password"
         value={props.loginData.password}
         onChange={props.handleChange}
+        required
       />
 
       <button

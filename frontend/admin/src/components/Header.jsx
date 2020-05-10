@@ -47,9 +47,6 @@ function Header(props) {
       <H1>Remember To Cook (admin)</H1>
       {!props.isLoggedIn && (
         <Buttons>
-          <Link to="/">
-            <Button>Home</Button>
-          </Link>
           <Link to="/login">
             <Button>Log in</Button>
           </Link>
@@ -57,20 +54,12 @@ function Header(props) {
       )}
       {props.isLoggedIn && (
         <Buttons>
-          <Link to="/recipes">
-            <Button>Recipes</Button>
-          </Link>
-          <Link to="/new">
-            <Button>New</Button>
-          </Link>
-          <Link to="/">
-            <Button>Home</Button>
-          </Link>
-          <Button>Log out</Button>
+          <Link to="/"><Button>Home</Button></Link>
+          <Link to="/recipes"><Button>Recipes</Button></Link>
+          <Link to="/new"><Button>New</Button></Link>
+          <Button onClick={props.handleLogout}>Log out</Button>
         </Buttons>
       )}
-
-
     </HeaderBar>
   );
 }

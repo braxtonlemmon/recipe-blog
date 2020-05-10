@@ -45,7 +45,9 @@ app.use('/auth', routes.auth);
 app.use('/comments',  routes.comments);
 app.get('/protected', passport.authenticate('jwt', { session: false }), (req, res) => {
   console.log('yo you made it');
-  res.send('yo you made it');
+  console.log(req.user);
+  // res.send('yo you made it');
+  res.json({ user: req.user });
 })
 app.get('/unprotected', (req, res) => {
   res.send('coolio man');

@@ -20,6 +20,7 @@ const options = {
 const strategy = new JwtStrategy(options, (payload, next) => {
   User.findById(payload.id, (err, user) => {
     console.log('found');
+    console.log(user.username);
     if (err) { return next(err, false); }
     if (user) { return next(null, user); }
     return next(null, false);
