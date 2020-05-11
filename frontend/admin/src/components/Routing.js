@@ -4,6 +4,8 @@ import Recipes from './Recipes';
 import RecipeFormContainer from './RecipeFormContainer';
 import Home from './Home';
 import NoMatch from './NoMatch';
+import RecipePage from './RecipePage';
+
 import {
   Switch,
   Route,
@@ -20,8 +22,11 @@ function Routing(props) {
   return (
     <Switch>
       <PrivateRoute exact path="/" component={Home} />
-      <PrivateRoute path='/recipes' component={Recipes} />
+      <PrivateRoute exact path='/recipes' component={Recipes} />
       <PrivateRoute path='/new' component={RecipeFormContainer} />
+      <PrivateRoute path='/recipes/:id'>
+        <RecipePage />
+      </PrivateRoute>
       <Route path="/login">
         <LoginFormContainer
           handleLogin={props.handleLogin}

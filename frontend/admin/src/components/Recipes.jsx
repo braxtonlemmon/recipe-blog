@@ -1,17 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Row = styled.div`
   display: grid;
-  grid-template-columns: 6fr 2fr 1fr 1fr;
-  p {
+  grid-template-columns: 5fr 2fr 2fr 1.2fr 1.2fr;
+  .item {
     border: 1px solid black;
     text-align: center;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .header {
+    font-weight: bold;
+  }
+  .button {
+    cursor: pointer;
   }
 `;
 
@@ -26,22 +39,42 @@ function Recipes() {
     .then(data => setRecipes(data.data));
   }, [])
 
+  const handleDelete = () => {
+    console.log('deleting...');
+  }
+
+  const handleEdit = () => {
+    console.log('editing...');
+  }
+
   return (
     <Wrapper>
       <h1>RECIPES</h1>
       <ul>
         <Row>
-          <p>Recipe</p>
-          <p>Published</p>
-          <p></p>
-          <p></p>
+          <p className="header item">Recipe</p>
+          <p className="header item">Created</p>
+          <p className="header item">Published</p>
+          <p className="header item">Edit</p>
+          <p className="header item">Delete</p>
         </Row>
         {recipes.map(recipe => (
           <Row key={recipe.title}>
-            <p className="title">{recipe.title}</p>
-            <p>?</p>
-            <p>Edit</p>
-            <p>Delete</p>
+            <div className="item">
+              <Link to={`/recipes/${recipe._id}`}><p>{recipe.title}</p></Link>
+            </div>
+            <div className="item">
+              <p>{recipe.date_formatted}</p>
+            </div>
+            <div className="item">
+              <p>{recipe.published ? 'Yes' : 'No'}</p>
+            </div>
+            <div className="item">
+              <p className='button' onClick={handleEdit}>✎</p>
+            </div>
+            <div className="item">
+              <p className='button' onClick={handleDelete}>🗑</p>
+            </div>
           </Row>
         ))}
       </ul>
