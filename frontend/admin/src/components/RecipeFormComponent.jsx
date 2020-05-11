@@ -6,6 +6,7 @@ const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 100px;
   input {
     font-size: 1.1em;
     padding: 4px;

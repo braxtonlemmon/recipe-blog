@@ -94,7 +94,7 @@ function RecipeFormContainer() {
   }
 
   return (
-    <Wrapper>
+
       <RecipeFormComponent 
         data={data} 
         handleChange={handleChange}
@@ -105,10 +105,7 @@ function RecipeFormContainer() {
         handleAddStep={handleAddStep}
         handleRemoveStep={handleRemoveStep}
       />
-      <pre>
-        {JSON.stringify(data, null, 2)}
-      </pre>
-    </Wrapper>
+
   )
 }
 
