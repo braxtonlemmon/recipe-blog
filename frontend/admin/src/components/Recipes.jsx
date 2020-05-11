@@ -30,13 +30,15 @@ const Row = styled.div`
 
 function Recipes() {
   const [recipes, setRecipes] = useState([]);
-  
+  const [recipesLoaded, setRecipesLoaded] = useState(false);
+
   useEffect(() => {
     fetch('/recipes', {
       method: 'get'
     })
     .then(result => result.json())
-    .then(data => setRecipes(data.data));
+    .then(data => setRecipes(data.data))
+    .then(() => setRecipesLoaded(true))
   }, [])
 
   const handleDelete = () => {
@@ -47,8 +49,9 @@ function Recipes() {
     console.log('editing...');
   }
 
-  return (
-    <Wrapper>
+  if (recipesLoaded) {
+    return (
+      <Wrapper>
       <h1>RECIPES</h1>
       <ul>
         <Row>
@@ -78,10 +81,13 @@ function Recipes() {
           </Row>
         ))}
       </ul>
-
-    </Wrapper>
-
-  )
+      </Wrapper>
+    )
+  } else {
+    return (
+      <h1>Loading...</h1>
+    )
+  }
 }
 
 export default Recipes;
