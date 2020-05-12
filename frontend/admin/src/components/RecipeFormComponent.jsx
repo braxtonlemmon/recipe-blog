@@ -134,7 +134,11 @@ function RecipeFormComponent(props) {
           onChange={props.handleChange}
         />
       </Box>
-      <button onClick={props.handleSubmit}>Submit</button>
+      <button 
+        onClick={props.isUpdating ? props.handleUpdate : props.handleSubmit}
+      >
+        Submit
+      </button>
     </Form>
   );
 }

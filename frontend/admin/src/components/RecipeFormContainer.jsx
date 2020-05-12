@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RecipeFormComponent from './RecipeFormComponent';
-import styled from 'styled-components';
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 100px;
-`;
+import { useParams, useHistory } from 'react-router-dom';
 
 function RecipeFormContainer() {
+  const history = useHistory();
+  const { recipeid } = useParams();
+  const [recipe, setRecipe] = useState(null);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [data, setData] = useState({
     title: '',
     ingredients: [''],
@@ -18,6 +16,33 @@ function RecipeFormContainer() {
     published: false,
     created: ''
   })
+  
+  useEffect(() => {
+    fetch(`/recipes/${recipeid}`, {
+      credentials: 'include',
+      method: 'GET'
+    })
+    .then(result => result.json())
+    .then(final => {
+        setRecipe(final.data)
+      })
+    .catch(err => console.log('problem!'))
+   }, [])
+
+   useEffect(() => {
+     if (recipe) {
+      setIsUpdating(true);
+      setData({ ...data, 
+        title: recipe.title,
+        ingredients: recipe.ingredients,
+        steps: recipe.steps,
+        intro: recipe.intro,
+        image: recipe.image,
+        published: recipe.published,
+        created: recipe.created
+      })
+    }
+   }, [recipe])
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -27,7 +52,6 @@ function RecipeFormContainer() {
   }
 
   const handleSubmit = (e) => {
-    console.log('submitting...');
     e.preventDefault();
     fetch('/recipes', {
       method: 'POST',
@@ -50,7 +74,38 @@ function RecipeFormContainer() {
       }
       throw new Error('Network response was not okay');
     })
-    .then(data => console.log(data))
+    .then(data => {
+      history.push(`/recipes/${data._id}`);
+    })
+    .catch(err => console.log(err.message));
+  }
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    fetch(`/recipes/${recipeid}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        title: data.title,
+        ingredients: data.ingredients,
+        steps: data.steps,
+        intro: data.intro,
+        published: data.published,
+      })
+    })
+    .then(response => {
+      if (response.ok && response.status === 200) {
+        return response.json();
+      }
+      throw new Error('Network response was not okay');
+    })
+    .then(data => {
+      history.push(`/recipes/${recipeid}`);
+    })
     .catch(err => console.log(err.message));
   }
 
@@ -94,7 +149,7 @@ function RecipeFormContainer() {
   }
 
   return (
-
+    <>
       <RecipeFormComponent 
         data={data} 
         handleChange={handleChange}
@@ -104,8 +159,10 @@ function RecipeFormContainer() {
         handleRemoveIngredient={handleRemoveIngredient}
         handleAddStep={handleAddStep}
         handleRemoveStep={handleRemoveStep}
+        handleUpdate={handleUpdate}
+        isUpdating={isUpdating}
       />
-
+    </>
   )
 }
 

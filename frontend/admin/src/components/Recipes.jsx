@@ -73,7 +73,10 @@ function Recipes() {
               <p>{recipe.published ? 'Yes' : 'No'}</p>
             </div>
             <div className="item">
-              <p className='button' onClick={handleEdit}>✎</p>
+              <Link to={`/recipes/${recipe._id}/edit`}>
+              <p>edit</p>
+              {/* <p className='button' onClick={handleEdit}>✎</p> */}
+              </Link>
             </div>
             <div className="item">
               <p className='button' onClick={handleDelete}>🗑</p>

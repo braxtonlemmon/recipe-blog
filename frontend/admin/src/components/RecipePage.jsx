@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import CommentBox from './CommentBox';
 
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -61,6 +62,7 @@ function RecipePage() {
     })
       .then(result => result.json())
       .then(data => {
+        console.log(data.data)
         setRecipe(data.data)
       })
       .then(() => setRecipeLoaded(true));
