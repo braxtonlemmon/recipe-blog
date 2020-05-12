@@ -17,7 +17,7 @@ const HeaderBar = styled.div`
 `;
 
 const H1 = styled.h1`
-  font-size: 1.5em;
+  font-size: 1.4em;
   @media (min-width: 600px) {
     font-size: 2.2em;
   }

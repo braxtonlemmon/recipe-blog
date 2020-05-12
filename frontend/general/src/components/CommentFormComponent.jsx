@@ -1,18 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { H2 } from './Shared';
 
 const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-top: 5px solid black;
+  padding: 15px;
+  label {
+    padding: 8px;
+  }
   input {
     padding: 6px;
     line-height: 1.4em;
     font-size: 1.1em;
     text-align: center;
     outline: none;
+    background: #f4f2ff;
+    border: 1px solid lightgray;
   }
 
   textarea {
@@ -20,14 +27,20 @@ const FormWrapper = styled.form`
     outline: none;
     padding: 8px;
     font-size: 1.1em;
+    text-align: center;
+    margin-bottom: 10px;
+    background: #f4f2ff;
+    border: 1px solid lightgray;
   }
+  grid-area: commentForm;
+  margin: 15px 0;
 `;
 
 function CommentFormComponent(props) {
   return (
     <FormWrapper name="commentForm">
 
-        <h2>Add Comment</h2>
+        <H2>Add Comment</H2>
         <label htmlFor="name">Name</label>
         <input 
           type="text"
@@ -45,10 +58,10 @@ function CommentFormComponent(props) {
           cols="30" 
           rows="10"
           required
+          placeholder="Your comment here..."
           value={props.data.content}
           onChange={props.handleChange}
         >
-          Add your comment here.
         </textarea>
 
         <button

@@ -2,11 +2,35 @@ import React from 'react';
 import styled from 'styled-components';
 import CommentBox from './CommentBox';
 import CommentForm from './CommentFormContainer';
+import { H1, H2 } from './Shared'; 
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  /* display: flex; */
+  display: grid;
+  /* flex-direction: column; */
+  /* align-items: center; */
+  justify-items: center;
   align-items: center;
+  width: 90%;
+  grid-template-areas:
+    "title"
+    "pic"
+    "about"
+    "ingredients"
+    "steps"
+    "commentForm"
+    "commentBox"
+  ;
+
+  @media (min-width: 1000px) {
+    grid-template-areas:
+      "title title"
+      "pic about"
+      "ingredients steps"
+      "commentForm commentForm"
+      "commentBox commentBox"
+    ;
+  }
 `;
 
 const InfoBox = styled.div`
@@ -15,25 +39,30 @@ const InfoBox = styled.div`
   padding: 5px;
   margin: 5px;
   border: 1px solid black;
-  align-items: flex-start;
+  /* align-items: flex-start; */
+  align-items: center;
 `;
 
-const H2 = styled.h2`
-  font-size: 1.5em;
-  text-align: center;
-  align-self: center;
-  margin-bottom: 10px;
-  text-shadow: 1px 1px grey, -1px 2px lightgreen;
+const AboutBox = styled(InfoBox)`
+  grid-area: about;
 `;
 
-const H1 = styled(H2)`
-  font-size: 2.5em;
-  margin: 15px 0 0 0;
+const IngredientsBox = styled(InfoBox)`
+  grid-area: ingredients;
+`;
+
+const StepsBox = styled(InfoBox)`
+  grid-area: steps;
+`;
+
+const MyH1 = styled(H1)`
+  grid-area: title;
 `
 
 
 const Image = styled.div`
   background-image: url(${(props) => props.url});
+  grid-area: pic;
   height: 250px;
   width: 250px;
   background-size: cover;
@@ -47,31 +76,35 @@ const Image = styled.div`
   }
 `;
 
+const Step = styled.li`
+  margin: 5px;
+`;
+
 function RecipePage(props) {
   return (
     <Wrapper>
-      <H1>{props.recipe.title}</H1>
+      <MyH1>{props.recipe.title}</MyH1>
       <Image url={props.recipe.image}></Image>
-      <InfoBox>
+      <AboutBox>
         <H2>About</H2>
         <p>{props.recipe.intro}</p>
-      </InfoBox>
-      <InfoBox>
+      </AboutBox>
+      <IngredientsBox>
         <H2>Ingredients</H2>
         <ul>
           {props.recipe.ingredients.map((ingredient) => (
             <li key={ingredient}>☐ {ingredient}</li>
           ))}
         </ul>
-      </InfoBox>
-      <InfoBox>
+      </IngredientsBox>
+      <StepsBox>
         <H2>Steps</H2>
         <ul>
           {props.recipe.steps.map((step, index) => (
-            <li key={step}>{index + 1} - {step}</li>
+            <Step key={step}>{index + 1}: {step}</Step>
           ))}
         </ul>
-      </InfoBox>
+      </StepsBox>
       <CommentForm 
         recipe={props.recipe}
         getComments={props.getComments}

@@ -1,15 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import { H2 } from './Shared';
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 15px;
-  h2 {
-    margin: 10px 0 15px 0;
-  }
+  padding: 15px;
   border-top: 5px solid black;
   align-items: center;
+  grid-area: commentBox;
 `;
 
 const CommentRow = styled.div`
@@ -53,7 +52,7 @@ function CommentBox(props) {
   
   return(
     <Wrapper>
-      <h2>COMMENTS</h2>
+      <H2>COMMENTS</H2>
       <div>{
         props.comments.length === 0 ?
         '- No comments yet -' :
