@@ -18,16 +18,18 @@ function RecipeFormContainer() {
   })
   
   useEffect(() => {
-    fetch(`/recipes/${recipeid}`, {
-      credentials: 'include',
-      method: 'GET'
-    })
-    .then(result => result.json())
-    .then(final => {
-        setRecipe(final.data)
+    if (recipeid) {
+      fetch(`/recipes/${recipeid}`, {
+        credentials: 'include',
+        method: 'GET'
       })
-    .catch(err => console.log('problem!'))
-   }, [])
+      .then(result => result.json())
+      .then(final => {
+          setRecipe(final.data)
+        })
+      .catch(err => console.log('problem!'))
+    }
+   }, [recipeid])
 
    useEffect(() => {
      if (recipe) {
@@ -150,8 +152,8 @@ function RecipeFormContainer() {
 
   return (
     <>
-      <RecipeFormComponent 
-        data={data} 
+      <RecipeFormComponent
+        data={data}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         handleInputChange={handleInputChange}
@@ -162,8 +164,9 @@ function RecipeFormContainer() {
         handleUpdate={handleUpdate}
         isUpdating={isUpdating}
       />
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </>
-  )
+  );
 }
 
 export default RecipeFormContainer;

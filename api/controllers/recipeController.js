@@ -8,6 +8,14 @@ const indexRecipes = (req, res, next) => {
   });
 }
 
+const indexPublishedRecipes = (req, res, next) => {
+  Recipe.find({ published: true })
+  .exec(function(err, data) {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+}
+
 const showRecipe = (req, res, next) => {
   Recipe.findById(req.params.id)
   .exec(function(err, recipe) {
@@ -20,6 +28,8 @@ const showRecipe = (req, res, next) => {
     return res.json({ success: true, data: recipe });
   });
 };
+
+
 const createRecipe = [
   body('title', 'Title is required').trim().isLength({ min: 1 }),
   body('ingredients', 'Ingredients are required.').exists(),
@@ -35,6 +45,7 @@ const createRecipe = [
       title: req.body.title,
       ingredients: req.body.ingredients,
       steps: req.body.steps,
+      published: req.body.published
     })
     if (!errors.isEmpty()) {
       res.send({ recipe: recipe, errors: errors.array() });
@@ -66,6 +77,7 @@ const updateRecipe = [
       title: req.body.title,
       ingredients: req.body.ingredients,
       steps: req.body.steps,
+      published: req.body.published,
       _id: req.params.id
     });
     req.body.intro ? (recipe.intro = req.body.intro) : null;
@@ -99,6 +111,7 @@ const destroyRecipe = (req, res, next) => {
 
 export default {
   indexRecipes,
+  indexPublishedRecipes,
   createRecipe,
   updateRecipe,
   destroyRecipe,

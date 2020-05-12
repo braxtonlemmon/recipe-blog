@@ -101,7 +101,7 @@ function RecipeFormComponent(props) {
             </Button>
           </Row>
         ))}
-        <Button onClick={props.handleAddIngredient}>➕</Button>
+        <Button onClick={props.handleAddIngredient}>+</Button>
       </Box>
 
       <Box>
@@ -121,7 +121,7 @@ function RecipeFormComponent(props) {
             <Button onClick={() => props.handleRemoveStep(index)}>-</Button>
           </Row>
         ))}
-        <Button onClick={props.handleAddStep}>➕</Button>
+        <Button onClick={props.handleAddStep}>+</Button>
       </Box>
 
       <Box>

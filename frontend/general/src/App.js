@@ -29,12 +29,18 @@ function App() {
   const [selectedRecipe, setSelectedRecipe] = useState({});
   const [selectedComments, setSelectedComments] = useState([]);
 
+  // const getRecipes = () => {
+  //   fetch('/recipes')
+  //   .then(data => data.json())
+  //   .then(res => {
+  //     setRecipes(res.data);
+  //   })
+  // }
+
   const getRecipes = () => {
-    fetch('/recipes')
+    fetch('/recipes/published')
     .then(data => data.json())
-    .then(res => {
-      setRecipes(res.data);
-    })
+    .then(res => setRecipes(res.data));
   }
 
   const handleRecipeClick = (id) => {

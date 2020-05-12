@@ -66,7 +66,7 @@ function RecipePage() {
         setRecipe(data.data)
       })
       .then(() => setRecipeLoaded(true));
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     fetch(`/comments/${id}`, {
@@ -76,7 +76,7 @@ function RecipePage() {
       .then(result => result.json())
       .then(data => setComments(data.data))
       .then(() => setCommentsLoaded(true));
-  }, []);
+  }, [id]);
   if (recipeLoaded && commentsLoaded) {
 
     return (
