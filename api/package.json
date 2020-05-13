@@ -19,6 +19,7 @@
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "express-validator": "^6.4.0",
+    "he": "^1.2.0",
     "helmet": "^3.22.0",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",

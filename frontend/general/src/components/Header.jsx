@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom'
 
 const HeaderBar = styled.div`
   position: fixed;
@@ -36,11 +37,13 @@ const Button = styled.button`
   outline: none;
 `;
 
-function Header(props) {
+function Header() {
   return (
     <HeaderBar>
       <H1>Remember To Cook</H1>
-      <Button onClick={props.handleClickHome}>Home</Button>
+      <Link to='/'><Button>Home</Button></Link>
+      <Link to='/About'><Button>About</Button></Link>
+      <Link to='/Contact'><Button>Contact</Button></Link>
     </HeaderBar>
   )
 }

@@ -1,9 +1,16 @@
 import Recipe from '../models/recipe';
 import { body, validationResult } from 'express-validator';
+const he = require('he');
 
 const indexRecipes = (req, res, next) => {
   Recipe.find((err, data) => {
     if (err) return res.json({ success: false, error: err });
+    data.forEach(recipe => {
+      recipe.title = he.decode(recipe.title);
+      recipe.intro = he.decode(recipe.intro);
+      recipe.steps = recipe.steps.map(step => he.decode(step));
+      recipe.ingredients = recipe.ingredients.map(ingredient => he.decode(ingredient));
+    })
     return res.json({ success: true, data: data });
   });
 }
@@ -12,6 +19,14 @@ const indexPublishedRecipes = (req, res, next) => {
   Recipe.find({ published: true })
   .exec(function(err, data) {
     if (err) return res.json({ success: false, error: err });
+    data.forEach((recipe) => {
+      recipe.title = he.decode(recipe.title);
+      recipe.intro = he.decode(recipe.intro);
+      recipe.steps = recipe.steps.map((step) => he.decode(step));
+      recipe.ingredients = recipe.ingredients.map((ingredient) =>
+        he.decode(ingredient)
+      );
+    });
     return res.json({ success: true, data: data });
   });
 }

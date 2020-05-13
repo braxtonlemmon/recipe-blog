@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Reset } from 'styled-reset';
 import GlobalStyle from './GlobalStyle';
 import Header from './components/Header.jsx';
-import Index from './components/RecipeIndex.jsx';
-import RecipePage from './components/RecipePage.jsx';
+import Routing from './components/Routing';
 
 // Styled components
 const Wrapper = styled.div`
@@ -23,79 +22,13 @@ const Main = styled.div`
 `;
 
 function App() {
-  const [showIndex, setShowIndex] = useState(true);
-  const [recipes, setRecipes] = useState([]);
-  const [showRecipe, setShowRecipe] = useState(false);
-  const [selectedRecipe, setSelectedRecipe] = useState({});
-  const [selectedComments, setSelectedComments] = useState([]);
-
-  // const getRecipes = () => {
-  //   fetch('/recipes')
-  //   .then(data => data.json())
-  //   .then(res => {
-  //     setRecipes(res.data);
-  //   })
-  // }
-
-  const getRecipes = () => {
-    fetch('/recipes/published')
-    .then(data => data.json())
-    .then(res => setRecipes(res.data));
-  }
-
-  const handleRecipeClick = (id) => {
-    fetch(`/recipes/${id}`)
-    .then(data => data.json())
-    .then(res => {
-      setSelectedRecipe(res.data);
-    })
-    .then(() => getComments(id))
-    .then(() => {
-      setShowIndex(false);
-      setShowRecipe(true);
-    })
-  }
-
-  const getComments = (id) => {
-    fetch(`/comments/${id}`)
-    .then(data => data.json())
-    .then(res => {
-      setSelectedComments(res.data);
-    })
-  }
-
-  const handleClickHome = () => {
-    setShowIndex(true);
-    setShowRecipe(false);
-  }
-
-
-  useEffect(() => {
-    getRecipes();
-  }, []);
-
-  
   return (
     <Wrapper>
       <Reset />
       <GlobalStyle />
-      <Header handleClickHome={handleClickHome}/>
+      <Header/>
       <Main>
-        { 
-          showIndex && 
-          <Index 
-            recipes={recipes}
-            handleRecipeClick={handleRecipeClick} 
-          /> 
-        }
-        { 
-          showRecipe &&
-          <RecipePage 
-            recipe={selectedRecipe} 
-            comments={selectedComments}
-            getComments={getComments}
-          />   
-        }
+        <Routing />
       </Main>
     </Wrapper>
   );

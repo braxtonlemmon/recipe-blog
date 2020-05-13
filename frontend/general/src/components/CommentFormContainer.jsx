@@ -29,7 +29,7 @@ function CommentFormContainer(props) {
     })
     .then(response => {
       if (response.ok && response.status === 200) {
-        props.getComments(props.recipe._id);
+        props.setCommentsLoaded(false);
         return response.json();
       }
       throw new Error('Network response was not okay');

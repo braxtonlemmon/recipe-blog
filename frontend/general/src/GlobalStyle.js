@@ -17,6 +17,11 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Special Elite', cursive;
   }
 
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
 `;
 
 export default GlobalStyle;

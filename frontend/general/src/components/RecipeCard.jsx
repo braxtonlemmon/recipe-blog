@@ -22,6 +22,7 @@ const Wrapper = styled.div`
 
 const H2 = styled.h2`
   font-size: 1.5em;
+  text-decoration: none;
 `;
 
 const Image = styled.div`
