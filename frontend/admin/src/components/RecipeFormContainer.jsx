@@ -55,26 +55,25 @@ function RecipeFormContainer() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let formData = new FormData();
+    const image = document.getElementById('image');
+    formData.append('image', image.files[0]);
+    formData.append('title', data.title);
+    formData.append('ingredients', data.ingredients);
+    formData.append('steps', data.steps);
+    formData.append('intro', data.intro);
+    formData.append('published', data.published);
     fetch('/recipes', {
       method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
       credentials: 'include',
-      body: JSON.stringify({
-        title: data.title,
-        ingredients: data.ingredients,
-        steps: data.steps,
-        intro: data.intro,
-        published: data.published,
-      })
+      body: formData,
+
     })
     .then(response => {
       if (response.ok && response.status === 200) {
         return response.json();
       }
-      throw new Error('Network response was not okay');
+      throw new Error('Network response was not okay uploading recipe');
     })
     .then(data => {
       history.push(`/recipes/${data._id}`);
@@ -84,20 +83,18 @@ function RecipeFormContainer() {
 
   const handleUpdate = (e) => {
     e.preventDefault();
+    let formData = new FormData();
+    const image = document.getElementById('image');
+    formData.append("image", image.files[0]);
+    formData.append("title", data.title);
+    formData.append("ingredients", data.ingredients);
+    formData.append("steps", data.steps);
+    formData.append("intro", data.intro);
+    formData.append("published", data.published);
     fetch(`/recipes/${recipeid}`, {
       method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
       credentials: 'include',
-      body: JSON.stringify({
-        title: data.title,
-        ingredients: data.ingredients,
-        steps: data.steps,
-        intro: data.intro,
-        published: data.published,
-      })
+      body: formData,
     })
     .then(response => {
       if (response.ok && response.status === 200) {

@@ -1,6 +1,7 @@
 import Recipe from '../models/recipe';
 import { body, validationResult } from 'express-validator';
 const he = require('he');
+const upload = require('../services/file-upload');
 
 const indexRecipes = (req, res, next) => {
   Recipe.find((err, data) => {
@@ -44,8 +45,8 @@ const showRecipe = (req, res, next) => {
   });
 };
 
-
 const createRecipe = [
+  upload.single('image'),
   body('title', 'Title is required').trim().isLength({ min: 1 }),
   body('ingredients', 'Ingredients are required.').exists(),
   body('steps', 'Recipe steps are required.').exists(),
@@ -60,7 +61,8 @@ const createRecipe = [
       title: req.body.title,
       ingredients: req.body.ingredients,
       steps: req.body.steps,
-      published: req.body.published
+      published: req.body.published,
+      image: req.file === undefined ? null : req.file.location
     })
     if (!errors.isEmpty()) {
       res.send({ recipe: recipe, errors: errors.array() });
@@ -68,7 +70,6 @@ const createRecipe = [
     }
     else {
       req.body.intro ? (recipe.intro = req.body.intro) : null;
-      req.body.image ? (recipe.image = req.body.image) : null;
       recipe.save(function(err) {
         if (err) { return next(err) }
         res.send(recipe);
@@ -78,6 +79,7 @@ const createRecipe = [
 ];
 
 const updateRecipe = [
+  upload.single('image'),
   body("title", "Title is required").trim().isLength({ min: 1 }),
   body("ingredients", "Ingredients are required.").exists(),
   body("steps", "Recipe steps are required.").exists(),
@@ -88,11 +90,16 @@ const updateRecipe = [
 
   (req, res, next) => {
     const errors = validationResult(req);
+    const originalRecipe = function(callback) {
+      Recipe.findById(req.params.id)
+      .exec(callback);
+    }
     const recipe = new Recipe({
       title: req.body.title,
       ingredients: req.body.ingredients,
       steps: req.body.steps,
       published: req.body.published,
+      image: req.file === undefined ? originalRecipe.image : req.file.location, 
       _id: req.params.id
     });
     req.body.intro ? (recipe.intro = req.body.intro) : null;
@@ -128,6 +135,7 @@ export default {
   indexRecipes,
   indexPublishedRecipes,
   createRecipe,
+
   updateRecipe,
   destroyRecipe,
   showRecipe

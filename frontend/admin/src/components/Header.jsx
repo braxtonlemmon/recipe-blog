@@ -57,6 +57,7 @@ function Header(props) {
           <Link to="/"><Button>Home</Button></Link>
           <Link to="/recipes"><Button>Recipes</Button></Link>
           <Link to="/new"><Button>New</Button></Link>
+          <Link to='/bananas'><Button>Image</Button></Link>
           <Button onClick={props.handleLogout}>Log out</Button>
         </Buttons>
       )}

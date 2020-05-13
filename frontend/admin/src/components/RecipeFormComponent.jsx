@@ -57,7 +57,15 @@ const Button = styled.div`
 
 function RecipeFormComponent(props) {
   return (
+    <>
+      <label htmlFor="image">Image</label>
+      <input  
+        type="file"
+        id="image"
+        name="image"
+      />
     <Form name="recipeForm">
+      
       <Box>
         <label htmlFor="title">Title</label>
         <input
@@ -140,6 +148,8 @@ function RecipeFormComponent(props) {
         Submit
       </button>
     </Form>
+    <form id="upload_form" enctype="multipart/form-data"></form>
+    </>
   );
 }
 
