@@ -24,6 +24,10 @@ const H1 = styled.h1`
   }
 `;
 
+const Buttons = styled.div`
+  display: flex;
+`;
+
 const Button = styled.button`
   display: flex;
   justify-content: center;
@@ -41,9 +45,11 @@ function Header() {
   return (
     <HeaderBar>
       <H1>Remember To Cook</H1>
-      <Link to='/'><Button>Home</Button></Link>
-      <Link to='/About'><Button>About</Button></Link>
-      <Link to='/Contact'><Button>Contact</Button></Link>
+      <Buttons>
+        <Link to='/'><Button>Home</Button></Link>
+        <Link to='/About'><Button>About</Button></Link>
+        <Link to='/Contact'><Button>Contact</Button></Link>
+      </Buttons>
     </HeaderBar>
   )
 }

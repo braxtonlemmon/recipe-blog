@@ -111,8 +111,27 @@ function createRecipes(cb) {
       function(callback) {
         recipeCreate(
           'Spanish Tortilla',
-          ['6 eggs', '500g potatoes', '1 yellow onion', '1/2 bunch parsley', 'salt'],
-          ['Slice potatoes and onion.', 'Cook potatoes and onion in oil', 'Mix with eggs', 'Add parsley', 'Cook for 15 minutes'],
+          ['500g (1lb) Yukon Gold potatoes', '100g (1/2 cup) vegetable oil', '1 large yellow onion',  '6 eggs', '1/2 bunch parsley', '1/2 teaspoon salt', '1/4 teaspoon black pepper'],
+          [
+            'Peel the potatoes and slice into 5mm (1/4 inch) rounds.',
+            'Peel and dice the onion.',
+            'Chop the parsley.',
+            'Heat a medium (~23cm / 9in) non-stick skillet over medium heat. Add the oil once the pan is hot.',
+            'Add the onion to the pan and cook for 2-3 minutes.', 
+            'Add the potatoes and reduce the heat to medium-low.',
+            'Frequently stir the potatoes and onion and cook for about 30 minutes or until the potato rounds are cooked through.',
+            'Remove the pan from heat and transfer the potatoes and onion to a separate bowl to cool.',
+            'In a clean bowl, add the eggs and briefly beat.',
+            'Stir in the potatoes, onion, parsley, salt, and pepper and stir until combined.',
+            'Put the skillet on the stove over medium heat and add enough oil to coat the bottom.',
+            'Pour the bowl of egg mixture into the pan and let cook for about 5-8 minutes. Use a rubber spatula to occasionally lift and check the bottom of the tortilla.',
+            'Once the bottom of the tortilla is browned (the top surface of the tortilla may still be quite runny), use a spatula to quickly and gently slide the entire tortilla to a clean heatproof plate that has a diameter larger than the pan.',
+            'Flip the skillet upside down and place on top of the tortilla on the plate. Using hotpads, grab the skillet and plate (with the tortilla inside) like you would a sandwich and quickly flip the entire thing so that the plate is now on top.',
+            'Return the pan to the stovetop and cook for another 5-8 minutes until the bottom is browned and the inside of the tortilla is no longer runny.',
+            'Remove the tortilla from the pan and allow to cool. Serve warm or at room temperature.',
+            'Store leftovers in the refrigerator.'
+
+          ],
           'Great way to use up leftover potatoes and onions',
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Spanish_Tortilla_%285845088254%29.jpg/800px-Spanish_Tortilla_%285845088254%29.jpg',
           false,

@@ -45,6 +45,9 @@ const AboutBox = styled(InfoBox)`
 
 const IngredientsBox = styled(InfoBox)`
   grid-area: ingredients;
+  li {
+    margin-bottom: 10px;
+  }
 `;
 
 const StepsBox = styled(InfoBox)`
@@ -71,7 +74,9 @@ const Image = styled.div`
 `;
 
 const Step = styled.li`
-  margin: 5px;
+  margin: 5px 10px 15px 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dotted black;
 `;
 
 function RecipePage() {
