@@ -50,8 +50,8 @@ function userCreate(username, password, cb) {
   });
 }
 
-function recipeCreate(title, ingredients, steps, intro, image, published, created, cb) {
-  recipedetail = { title, ingredients, steps, intro, image, published, created };
+function recipeCreate(title, ingredients, steps, intro, quote, image, published, created, cb) {
+  recipedetail = { title, ingredients, steps, intro, quote, image, published, created };
   const recipe = new Recipe(recipedetail);
   recipe.save(err => {
     if (err) {
@@ -102,6 +102,7 @@ function createRecipes(cb) {
           ["Flour", "Water", "Yeast", "Salt"],
           ["Mix dry", "Mix wet", "Knead for 10 minutes", "Bake at 350"],
           "Simple homemade bread",
+          'Yummmm',
           'https://cdn.pixabay.com/photo/2020/02/17/17/10/bread-4857068_960_720.jpg',
           false,
           Date.now(),
@@ -133,6 +134,7 @@ function createRecipes(cb) {
 
           ],
           'Great way to use up leftover potatoes and onions',
+          "Doesn't need to be reheated!",
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Spanish_Tortilla_%285845088254%29.jpg/800px-Spanish_Tortilla_%285845088254%29.jpg',
           false,
           Date.now(),
@@ -145,6 +147,7 @@ function createRecipes(cb) {
           ['Milk', 'Box of cereal', 'Sugar'],
           ['Pour dry cereal into bowl', 'Add desired amount of milk', 'Add spoonfuls of sugar', 'Eat'],
           'This is what you should eat every day',
+          'Breakfast, lunch, dinner',
           'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bowl_of_Cereal_%28Unsplash%29.jpg/800px-Bowl_of_Cereal_%28Unsplash%29.jpg',
           false,
           Date.now(),

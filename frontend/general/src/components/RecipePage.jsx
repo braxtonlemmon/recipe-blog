@@ -8,7 +8,8 @@ import { H1, H2 } from './Shared';
 const Wrapper = styled.div`
   display: grid;
   justify-items: center;
-  align-items: center;
+  align-items: baseline;
+
   width: 90%;
   grid-template-areas:
     "title"
@@ -20,9 +21,11 @@ const Wrapper = styled.div`
     "commentBox"
   ;
   @media (min-width: 1000px) {
+    grid-template-columns: 1fr 4fr;
     grid-template-areas:
       "title title"
-      "pic about"
+      "pic pic"
+      "about about"
       "ingredients steps"
       "commentForm commentForm"
       "commentBox commentBox"
@@ -33,9 +36,8 @@ const Wrapper = styled.div`
 const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 5px;
+  padding: 10px;
   margin: 5px;
-  border: 1px solid black;
   align-items: center;
 `;
 
@@ -45,13 +47,23 @@ const AboutBox = styled(InfoBox)`
 
 const IngredientsBox = styled(InfoBox)`
   grid-area: ingredients;
-  li {
-    margin-bottom: 10px;
+  @media (min-width: 1000px) {
+    ${props => {
+      if (props.fixed) {
+        return `
+        position: fixed;
+        top: 50;
+        width: 17.1vw;
+        `
+      }
+    }}
   }
 `;
 
 const StepsBox = styled(InfoBox)`
   grid-area: steps;
+  justify-self: left;
+  border-left: 2px dashed black;
 `;
 
 const MyH1 = styled(H1)`
@@ -73,10 +85,53 @@ const Image = styled.div`
   }
 `;
 
+const Ingredient = styled.li`
+  margin: 10px;
+  padding-bottom: 10px;
+  display: grid;
+  grid-template-columns: 2.5em 1fr;
+  align-items: center;
+  border-bottom: 1px dotted black;
+  .checkbox {
+    appearance: none;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: white;
+    height: 1.8em;
+    width: 1.8em;
+    box-shadow: 1px 1px 1px grey;
+    outline: none;
+  }
+
+  .checkbox:checked:after {
+    content: '🧀'; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: 600;
+    height: 100%;
+    width: 100%;
+    color: black;
+    background-color: lightgoldenrodyellow;
+  }
+`;
+
 const Step = styled.li`
   margin: 5px 10px 15px 10px;
   padding-bottom: 10px;
   border-bottom: 1px dotted black;
+  display: grid;
+  grid-template-columns: 3em 1fr;
+  align-items: center;
+  gap: 10px;
+  .stepNum {
+    font-size: 2em;
+    justify-self: center;
+
+  }
 `;
 
 function RecipePage() {
@@ -84,7 +139,20 @@ function RecipePage() {
   const [comments, setComments] = useState([]);
   const [recipeLoaded, setRecipeLoaded] = useState(false);
   const [commentsLoaded, setCommentsLoaded] = useState(false);
+  const [ingredientsFixed, setIngredientsFixed] = useState(false);
   const { id } = useParams();
+
+  const handleScroll = () => {
+    const ingredientsBox = document.getElementById('ingredients-box').getBoundingClientRect();
+    const stepsBox = document.getElementById('steps-box').getBoundingClientRect();
+    if (stepsBox.top <= 55 && ingredientsBox.height < window.innerHeight - 150) {
+      console.log('there!');
+      setIngredientsFixed(true);
+    } else if (stepsBox.top > 55) {
+      setIngredientsFixed(false);
+    }
+  }
+
 
   useEffect(() => {
     fetch(`/recipes/${id}`)
@@ -100,6 +168,13 @@ function RecipePage() {
     .then(() => setCommentsLoaded(true))
   }, [commentsLoaded])
 
+  useEffect(() => {
+    if (recipeLoaded && commentsLoaded) {  
+      window.addEventListener('scroll', handleScroll)
+    }
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [recipeLoaded, commentsLoaded])
+
   if (recipeLoaded && commentsLoaded) {
     return (
       <Wrapper>
@@ -109,19 +184,26 @@ function RecipePage() {
           <H2>About</H2>
           <p>{recipe.intro}</p>
         </AboutBox>
-        <IngredientsBox>
+        <IngredientsBox fixed={ingredientsFixed} id="ingredients-box">
           <H2>Ingredients</H2>
           <ul>
             {recipe.ingredients.map((ingredient) => (
-              <li key={ingredient}>☐ {ingredient}</li>
+              <Ingredient key={ingredient}>
+                <input class="checkbox" type="checkbox"></input>
+                {/* <span onClick={() => handleClick} class="checkbox">☐</span>  */}
+                <p>{ingredient}</p>
+              </Ingredient>
             ))}
           </ul>
         </IngredientsBox>
-        <StepsBox>
+        <StepsBox id="steps-box">
           <H2>Steps</H2>
           <ul>
             {recipe.steps.map((step, index) => (
-              <Step key={step}>{index + 1}: {step}</Step>
+              <Step key={step}>
+                <p class="stepNum">{index + 1}</p> 
+                <p>{step}</p>
+              </Step>
             ))}
           </ul>
         </StepsBox>

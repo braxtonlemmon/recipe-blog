@@ -7,6 +7,7 @@ const RecipeSchema = new Schema({
   ingredients: { type: Array, required: true },
   steps: { type: Array, required: true },
   intro: { type: String },
+  quote: { type: String },
   image: { type: String },
   published: { type: Boolean, required: true, default: false },
   created: { type: Date, default: Date.now() }

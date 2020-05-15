@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom'
 
 const HeaderBar = styled.div`
+  flex-shrink: 0;
   position: fixed;
   top: 0;
   left: 0;
@@ -15,6 +16,7 @@ const HeaderBar = styled.div`
   justify-content: space-between;
   border-bottom: 4px dashed black;
   z-index: 10;
+
 `;
 
 const H1 = styled.h1`
@@ -46,7 +48,7 @@ function Header() {
     <HeaderBar>
       <H1>Remember To Cook</H1>
       <Buttons>
-        <Link to='/'><Button>Home</Button></Link>
+        <Link to='/'><Button>Recipes</Button></Link>
         <Link to='/About'><Button>About</Button></Link>
         <Link to='/Contact'><Button>Contact</Button></Link>
       </Buttons>

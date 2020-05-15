@@ -4,11 +4,16 @@ import RecipeCard from './RecipeCard';
 import { Link } from 'react-router-dom';
 
 const Wrapper = styled.ul`
-  display: grid;
+  /* display: grid; */
+  display: flex;
+  flex-wrap: wrap;
   grid-template-columns: repeat(auto-fill, 260px);
   justify-content: center;
   gap: 10px;
   width: 90%;
+  li {
+    margin: 15px;
+  }
 `;
 
 function Index() {

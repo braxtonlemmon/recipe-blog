@@ -45,6 +45,7 @@ const Quote = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 `;
 
 function RecipeCard(props) {
@@ -63,7 +64,7 @@ function RecipeCard(props) {
       <H2>{props.recipe.title}</H2>
       <Image url={props.recipe.image}>
         <Quote isMouseOver={isMouseOver}>
-          <p>"Definitely the best!"</p>
+          <p>{props.recipe.quote}</p>
         </Quote>
       </Image>
     </Wrapper>

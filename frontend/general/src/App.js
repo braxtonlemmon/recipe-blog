@@ -4,11 +4,15 @@ import { Reset } from 'styled-reset';
 import GlobalStyle from './GlobalStyle';
 import Header from './components/Header.jsx';
 import Routing from './components/Routing';
+import Footer from './components/Footer';
 
 // Styled components
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  min-height: 100%;
+  align-items: stretch;
+
 `;
 
 const Main = styled.div`
@@ -19,6 +23,8 @@ const Main = styled.div`
   height: 100%;
   width: 100%;
   margin-bottom: 3.5em;
+  flex-shrink: 0;
+  flex-grow: 1;
 `;
 
 function App() {
@@ -30,6 +36,7 @@ function App() {
       <Main>
         <Routing />
       </Main>
+      <Footer />
     </Wrapper>
   );
 }
