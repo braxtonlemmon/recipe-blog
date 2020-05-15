@@ -127,11 +127,39 @@ const Step = styled.li`
   grid-template-columns: 3em 1fr;
   align-items: center;
   gap: 10px;
-  .stepNum {
-    font-size: 2em;
-    justify-self: center;
 
+  .step-box-holder {
+    height: 2.2em;
+    width: 2.2em;
+    position: relative;
+    display: flex;
+    justify-content: center;
   }
+
+  input {
+    appearance: none;
+    height: 0;
+    width: 0;
+  }
+
+  .step-number {
+    position: absolute;
+    font-size: 2em;
+    z-index: 5;
+    cursor: pointer;
+  }
+
+  .step-text {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  input:checked + label {
+    color: lightgrey;
+  }
+
 `;
 
 function RecipePage() {
@@ -189,7 +217,7 @@ function RecipePage() {
           <ul>
             {recipe.ingredients.map((ingredient) => (
               <Ingredient key={ingredient}>
-                <input class="checkbox" type="checkbox"></input>
+                <input className="checkbox" type="checkbox"></input>
                 {/* <span onClick={() => handleClick} class="checkbox">☐</span>  */}
                 <p>{ingredient}</p>
               </Ingredient>
@@ -200,9 +228,15 @@ function RecipePage() {
           <H2>Steps</H2>
           <ul>
             {recipe.steps.map((step, index) => (
-              <Step key={step}>
-                <p class="stepNum">{index + 1}</p> 
-                <p>{step}</p>
+              <Step key={step}
+                num={index + 1}
+              >
+                <div className="step-box-holder">
+                  <input type="checkbox" id={`step-checkbox-${index}`}></input>
+                  <label className="step-number" htmlFor={`step-checkbox-${index}`}>{index + 1}</label>
+                </div>
+                <label className= "step-text" htmlFor={`step-checkbox-${index}`}>{step}</label>
+                {/* <p>{step}</p> */}
               </Step>
             ))}
           </ul>
