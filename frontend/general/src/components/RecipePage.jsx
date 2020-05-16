@@ -168,19 +168,32 @@ function RecipePage() {
   const [recipeLoaded, setRecipeLoaded] = useState(false);
   const [commentsLoaded, setCommentsLoaded] = useState(false);
   const [ingredientsFixed, setIngredientsFixed] = useState(false);
+  const [checkboxes, setCheckboxes] = useState({});
   const { id } = useParams();
 
   const handleScroll = () => {
     const ingredientsBox = document.getElementById('ingredients-box').getBoundingClientRect();
     const stepsBox = document.getElementById('steps-box').getBoundingClientRect();
     if (stepsBox.top <= 55 && ingredientsBox.height < window.innerHeight - 150) {
-      console.log('there!');
       setIngredientsFixed(true);
     } else if (stepsBox.top > 55) {
       setIngredientsFixed(false);
     }
   }
 
+  const handleCheck = (e) => {
+    if (e.target.checked) {
+      localStorage.setItem(e.target.id, e.target.checked)
+      setCheckboxes({ ...localStorage });
+    } else {
+      localStorage.setItem(e.target.id, e.target.checked);
+      setCheckboxes({ ...localStorage })
+    }
+  }
+
+  useEffect(() => {
+    setCheckboxes({...localStorage});
+  }, []);
 
   useEffect(() => {
     fetch(`/recipes/${id}`)
@@ -215,10 +228,15 @@ function RecipePage() {
         <IngredientsBox fixed={ingredientsFixed} id="ingredients-box">
           <H2>Ingredients</H2>
           <ul>
-            {recipe.ingredients.map((ingredient) => (
+            {recipe.ingredients.map((ingredient, index) => (
               <Ingredient key={ingredient}>
-                <input className="checkbox" type="checkbox"></input>
-                {/* <span onClick={() => handleClick} class="checkbox">☐</span>  */}
+                <input 
+                  className="checkbox" 
+                  type="checkbox"
+                  id={`ingredient-checkbox-${index}`}
+                  defaultChecked={checkboxes[`ingredient-checkbox-${index}`] === 'true' ? true : false}
+                  onChange={handleCheck}
+                ></input>
                 <p>{ingredient}</p>
               </Ingredient>
             ))}
@@ -228,15 +246,17 @@ function RecipePage() {
           <H2>Steps</H2>
           <ul>
             {recipe.steps.map((step, index) => (
-              <Step key={step}
-                num={index + 1}
-              >
+              <Step key={step}>
                 <div className="step-box-holder">
-                  <input type="checkbox" id={`step-checkbox-${index}`}></input>
+                  <input 
+                    type="checkbox" 
+                    id={`step-checkbox-${index}`}
+                    defaultChecked={checkboxes[`step-checkbox-${index}`] === 'true' ? true : false}
+                    onChange={handleCheck}
+                  ></input>
                   <label className="step-number" htmlFor={`step-checkbox-${index}`}>{index + 1}</label>
                 </div>
                 <label className= "step-text" htmlFor={`step-checkbox-${index}`}>{step}</label>
-                {/* <p>{step}</p> */}
               </Step>
             ))}
           </ul>
