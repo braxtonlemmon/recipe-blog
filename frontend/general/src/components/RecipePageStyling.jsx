@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { H1, H2 } from './Shared';
 
@@ -62,6 +61,7 @@ const StepsBox = styled(InfoBox)`
   @media (min-width: 1000px) {
     border-left: 2px dashed black;
     justify-self: left;
+    
   }
 `;
 
@@ -126,7 +126,6 @@ const Step = styled.li`
   grid-template-columns: 3em 1fr;
   align-items: center;
   gap: 10px;
-
   .step-box-holder {
     height: 2.2em;
     width: 2.2em;
@@ -157,6 +156,9 @@ const Step = styled.li`
 
   input:checked + label {
     color: lightgrey;
+  }
+  @media (min-width: 1000px) {
+    width: 66vw;
   }
 
 `;
