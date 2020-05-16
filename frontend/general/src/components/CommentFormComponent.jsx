@@ -18,7 +18,7 @@ const FormWrapper = styled.form`
     font-size: 1.1em;
     text-align: center;
     outline: none;
-    background: #f4f2ff;
+    background: #fbfaff;
     border: 1px solid lightgray;
   }
 
@@ -29,7 +29,7 @@ const FormWrapper = styled.form`
     font-size: 1.1em;
     text-align: center;
     margin-bottom: 10px;
-    background: #f4f2ff;
+    background: #fbfaff;
     border: 1px solid lightgray;
   }
   grid-area: commentForm;

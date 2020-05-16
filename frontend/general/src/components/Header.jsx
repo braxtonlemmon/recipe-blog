@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom'
+import { H1 } from './Shared';
 
 const HeaderBar = styled.div`
   flex-shrink: 0;
@@ -14,12 +15,12 @@ const HeaderBar = styled.div`
   background: white;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 4px dashed black;
+  border-bottom: 3px dashed black;
   z-index: 10;
 
 `;
 
-const H1 = styled.h1`
+const MyH1 = styled(H1)`
   font-size: 1.4em;
   @media (min-width: 600px) {
     font-size: 2.2em;
@@ -46,7 +47,7 @@ const Button = styled.button`
 function Header() {
   return (
     <HeaderBar>
-      <H1>Remember To Cook</H1>
+      <MyH1>Remember To Cook</MyH1>
       <Buttons>
         <Link to='/'><Button>Recipes</Button></Link>
         <Link to='/About'><Button>About</Button></Link>

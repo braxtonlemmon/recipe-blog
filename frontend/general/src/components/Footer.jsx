@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Wrapper = styled.footer`
-  background: brown;
+  background: #754c4c;
   width: 100%;
   flex-shrink: 0;
   color: white;
-  padding: 25px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,7 +20,11 @@ const Links = styled.div`
   justify-content: space-evenly;
   a {
     color: white;
+    margin: 0 10px;
   }
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid white;
 `;
 
 const Copyright = styled.div`
@@ -35,9 +39,9 @@ function Footer() {
   return (
     <Wrapper>
       <Links>
-        <Link to='/'>Recipes</Link>
-        <Link to='/about'>About</Link>
-        <Link to='/contact'>Contact</Link>
+        <Link to='/'>Recipes</Link> -
+        <Link to='/about'>About</Link> -
+        <Link to='/contact'>Contact</Link> 
       </Links>
       <Copyright>
         <span role="img" aria-label="copyright">©</span>
