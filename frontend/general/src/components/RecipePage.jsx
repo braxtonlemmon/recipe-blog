@@ -1,166 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import CommentBox from './CommentBox';
 import CommentForm from './CommentFormContainer';
-import { H1, H2 } from './Shared'; 
-
-const Wrapper = styled.div`
-  display: grid;
-  justify-items: center;
-  align-items: baseline;
-
-  width: 90%;
-  grid-template-areas:
-    "title"
-    "pic"
-    "about"
-    "ingredients"
-    "steps"
-    "commentForm"
-    "commentBox"
-  ;
-  @media (min-width: 1000px) {
-    grid-template-columns: 1fr 4fr;
-    grid-template-areas:
-      "title title"
-      "pic pic"
-      "about about"
-      "ingredients steps"
-      "commentForm commentForm"
-      "commentBox commentBox"
-    ;
-  }
-`;
-
-const InfoBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  margin: 5px;
-  align-items: center;
-`;
-
-const AboutBox = styled(InfoBox)`
-  grid-area: about;
-`;
-
-const IngredientsBox = styled(InfoBox)`
-  grid-area: ingredients;
-  @media (min-width: 1000px) {
-    ${props => {
-      if (props.fixed) {
-        return `
-        position: fixed;
-        top: 50;
-        width: 17.1vw;
-        `
-      }
-    }}
-  }
-`;
-
-const StepsBox = styled(InfoBox)`
-  grid-area: steps;
-  justify-self: left;
-  border-left: 2px dashed black;
-`;
-
-const MyH1 = styled(H1)`
-  grid-area: title;
-`
-
-const Image = styled.div`
-  background-image: url(${(props) => props.url});
-  grid-area: pic;
-  height: 250px;
-  width: 250px;
-  background-size: cover;
-  background-position: center;
-  box-shadow: -12px 7px 2px #383838, 12px 12px 2px #5c5c5c;
-  margin: 20px;
-  @media (min-width: 600px) {
-    height: 500px;
-    width: 500px;
-  }
-`;
-
-const Ingredient = styled.li`
-  margin: 10px;
-  padding-bottom: 10px;
-  display: grid;
-  grid-template-columns: 2.5em 1fr;
-  align-items: center;
-  border-bottom: 1px dotted black;
-  .checkbox {
-    appearance: none;
-    border: 2px solid black;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: white;
-    height: 1.8em;
-    width: 1.8em;
-    box-shadow: 1px 1px 1px grey;
-    outline: none;
-  }
-
-  .checkbox:checked:after {
-    content: '🧀'; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 1.5em;
-    font-weight: 600;
-    height: 100%;
-    width: 100%;
-    color: black;
-    background-color: lightgoldenrodyellow;
-  }
-`;
-
-const Step = styled.li`
-  margin: 5px 10px 15px 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px dotted black;
-  display: grid;
-  grid-template-columns: 3em 1fr;
-  align-items: center;
-  gap: 10px;
-
-  .step-box-holder {
-    height: 2.2em;
-    width: 2.2em;
-    position: relative;
-    display: flex;
-    justify-content: center;
-  }
-
-  input {
-    appearance: none;
-    height: 0;
-    width: 0;
-  }
-
-  .step-number {
-    position: absolute;
-    font-size: 2em;
-    z-index: 5;
-    cursor: pointer;
-  }
-
-  .step-text {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-  }
-
-  input:checked + label {
-    color: lightgrey;
-  }
-
-`;
+import { H2 } from './Shared'; 
+import { 
+  Wrapper, 
+  AboutBox,
+  IngredientsBox,
+  StepsBox,
+  MyH1,
+  Image,
+  Ingredient,
+  Step
+} from './RecipePageStyling';
 
 function RecipePage() {
   const [recipe, setRecipe] = useState({});
@@ -181,40 +33,11 @@ function RecipePage() {
     }
   }
 
-  // const handleCheck = (e) => {
-  //   if (e.target.checked) {
-  //     localStorage.setItem(e.target.id, e.target.checked)
-  //     setCheckboxes({ ...localStorage });
-  //   } else {
-  //     localStorage.setItem(e.target.id, e.target.checked);
-  //     setCheckboxes({ ...localStorage })
-  //   }
-  // }
-
   const handleCheck = (e) => {
-    console.log(checkboxes[e.target.id]);
-    if (e.target.checked) {
-      // get object from local storage
-      console.log('yes');
-      const data = JSON.parse(localStorage.getItem(recipe._id));
-      // now DATA is an object with checkbox-id/boolean pairs
-      console.log(data);
-      // add to DATA object
-      data[e.target.id] = e.target.checked;
-      
-      // set local storage
-      localStorage.setItem(recipe._id, JSON.stringify(data));
-
-      // update checkboxes state with the updated DATA object
-      setCheckboxes(data);
-    } else {
-      console.log('no');
-      const data = JSON.parse(localStorage.getItem(recipe._id));
-      data[e.target.id] = e.target.checked;
-      localStorage.setItem(recipe._id, JSON.stringify(data));
-      setCheckboxes(data);
-
-    }
+    const data = JSON.parse(localStorage.getItem(recipe._id));
+    data[e.target.id] = e.target.checked;
+    localStorage.setItem(recipe._id, JSON.stringify(data));
+    setCheckboxes(data); 
   }
   
   // Get checkbox data from localStorage and store in state
