@@ -219,28 +219,42 @@ function RecipePage() {
   
   // Get checkbox data from localStorage and store in state
   useEffect(() => {
-      const data = JSON.parse(localStorage.getItem(recipe._id));
-      if (recipeLoaded && data === null) {
-        localStorage.setItem(recipe._id, JSON.stringify({}));
-      } else {
-        setCheckboxes({...data})
-      }
-    }, [recipeLoaded, recipe]);
+    const data = JSON.parse(localStorage.getItem(recipe._id));
+    if (recipeLoaded && data === null) {
+      localStorage.setItem(recipe._id, JSON.stringify({}));
+    } else {
+      setCheckboxes({...data})
+    }
+  }, [recipeLoaded, recipe]);
 
   // Fetch recipe data from db
   useEffect(() => {
-    fetch(`/recipes/${id}`)
+    const abortController = new AbortController();
+
+    fetch(`/recipes/${id}`, { signal: abortController.signal })
     .then(result => result.json())
     .then(data => setRecipe(data.data))
     .then(() => setRecipeLoaded(true))
+    .catch(err => {
+      console.error('Request failed', err);
+    });
+
+    return () => abortController.abort();
   }, [id])
 
   // Fetch comments data from db
   useEffect(() => {
-    fetch(`/comments/${id}`)
+    const abortController = new AbortController();
+    
+    fetch(`/comments/${id}`, { signal: abortController.signal })
     .then(result => result.json())
     .then(data => setComments(data.data))
     .then(() => setCommentsLoaded(true))
+    .catch(err => console.error('Request failed', err));
+
+    return () => {
+      abortController.abort();
+    };
   }, [commentsLoaded])
 
   // Add scroll event listener for ingredients box

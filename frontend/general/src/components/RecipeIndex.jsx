@@ -21,10 +21,15 @@ function Index() {
   const [recipesLoaded, setRecipesLoaded] = useState(false);
 
   useEffect(() => {
-    fetch('/recipes')
+    const abortController = new AbortController();
+
+    fetch('/recipes', { signal: abortController.signal })
     .then(result => result.json())
     .then(data => setRecipes(data.data))
     .then(() => setRecipesLoaded(true))
+    .catch(err => console.error('Request failed', err));
+
+    return () => abortController.abort();
   }, []);
   
   if (recipesLoaded) {

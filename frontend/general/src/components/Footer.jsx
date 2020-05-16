@@ -31,8 +31,6 @@ const Copyright = styled.div`
   align-items: center;
 `;
 
-
-
 function Footer() {
   return (
     <Wrapper>
