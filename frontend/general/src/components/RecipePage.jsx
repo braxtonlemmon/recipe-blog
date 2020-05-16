@@ -181,20 +181,53 @@ function RecipePage() {
     }
   }
 
+  // const handleCheck = (e) => {
+  //   if (e.target.checked) {
+  //     localStorage.setItem(e.target.id, e.target.checked)
+  //     setCheckboxes({ ...localStorage });
+  //   } else {
+  //     localStorage.setItem(e.target.id, e.target.checked);
+  //     setCheckboxes({ ...localStorage })
+  //   }
+  // }
+
   const handleCheck = (e) => {
+    console.log(checkboxes[e.target.id]);
     if (e.target.checked) {
-      localStorage.setItem(e.target.id, e.target.checked)
-      setCheckboxes({ ...localStorage });
+      // get object from local storage
+      console.log('yes');
+      const data = JSON.parse(localStorage.getItem(recipe._id));
+      // now DATA is an object with checkbox-id/boolean pairs
+      console.log(data);
+      // add to DATA object
+      data[e.target.id] = e.target.checked;
+      
+      // set local storage
+      localStorage.setItem(recipe._id, JSON.stringify(data));
+
+      // update checkboxes state with the updated DATA object
+      setCheckboxes(data);
     } else {
-      localStorage.setItem(e.target.id, e.target.checked);
-      setCheckboxes({ ...localStorage })
+      console.log('no');
+      const data = JSON.parse(localStorage.getItem(recipe._id));
+      data[e.target.id] = e.target.checked;
+      localStorage.setItem(recipe._id, JSON.stringify(data));
+      setCheckboxes(data);
+
     }
   }
-
+  
+  // Get checkbox data from localStorage and store in state
   useEffect(() => {
-    setCheckboxes({...localStorage});
-  }, []);
+      const data = JSON.parse(localStorage.getItem(recipe._id));
+      if (recipeLoaded && data === null) {
+        localStorage.setItem(recipe._id, JSON.stringify({}));
+      } else {
+        setCheckboxes({...data})
+      }
+    }, [recipeLoaded, recipe]);
 
+  // Fetch recipe data from db
   useEffect(() => {
     fetch(`/recipes/${id}`)
     .then(result => result.json())
@@ -202,6 +235,7 @@ function RecipePage() {
     .then(() => setRecipeLoaded(true))
   }, [id])
 
+  // Fetch comments data from db
   useEffect(() => {
     fetch(`/comments/${id}`)
     .then(result => result.json())
@@ -209,6 +243,7 @@ function RecipePage() {
     .then(() => setCommentsLoaded(true))
   }, [commentsLoaded])
 
+  // Add scroll event listener for ingredients box
   useEffect(() => {
     if (recipeLoaded && commentsLoaded) {  
       window.addEventListener('scroll', handleScroll)
@@ -234,7 +269,7 @@ function RecipePage() {
                   className="checkbox" 
                   type="checkbox"
                   id={`ingredient-checkbox-${index}`}
-                  defaultChecked={checkboxes[`ingredient-checkbox-${index}`] === 'true' ? true : false}
+                  defaultChecked={checkboxes[`ingredient-checkbox-${index}`] === true ? true : false}
                   onChange={handleCheck}
                 ></input>
                 <p>{ingredient}</p>
@@ -251,7 +286,7 @@ function RecipePage() {
                   <input 
                     type="checkbox" 
                     id={`step-checkbox-${index}`}
-                    defaultChecked={checkboxes[`step-checkbox-${index}`] === 'true' ? true : false}
+                    defaultChecked={checkboxes[`step-checkbox-${index}`] === true ? true : false}
                     onChange={handleCheck}
                   ></input>
                   <label className="step-number" htmlFor={`step-checkbox-${index}`}>{index + 1}</label>
