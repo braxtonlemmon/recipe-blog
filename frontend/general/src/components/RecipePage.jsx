@@ -78,7 +78,7 @@ function RecipePage() {
     return () => {
       abortController.abort();
     };
-  }, [commentsLoaded])
+  }, [commentsLoaded, id])
 
   // Add scroll event listener for ingredients box
   useEffect(() => {

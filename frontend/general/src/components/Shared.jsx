@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const H1 = styled.h1`
@@ -17,8 +16,6 @@ const H2 = styled.h2`
   margin-bottom: 10px;
   text-shadow: 1px 1px grey, -1px 2px lightgreen;
 `;
-
-
 
 export {
   H1,

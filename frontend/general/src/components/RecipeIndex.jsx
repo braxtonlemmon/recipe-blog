@@ -36,9 +36,9 @@ function Index() {
      return (
         <Wrapper>
           {recipes.map((recipe) => (
-            <Link to={`/recipes/${recipe._id}`}>
-              <li key={recipe.title}>
-                <RecipeCard recipe={recipe} key={recipe.title} />
+            <Link key={recipe._id} to={`/recipes/${recipe._id}`}>
+              <li key={`list~${recipe._id}`}>
+                <RecipeCard recipe={recipe} key={`card~${recipe._id}`} />
               </li>
             </Link>
           ))}

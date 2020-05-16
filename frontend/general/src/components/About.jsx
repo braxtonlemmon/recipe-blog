@@ -1,6 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-import { H1, H2 } from './Shared';
+import { H1 } from './Shared';
 
 function About() {
   return (

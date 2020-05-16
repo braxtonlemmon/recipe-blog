@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { H1, H2 } from './Shared';
+import { H1 } from './Shared';
 
 const Wrapper = styled.div`
   display: grid;
@@ -160,7 +160,6 @@ const Step = styled.li`
   @media (min-width: 1000px) {
     width: 66vw;
   }
-
 `;
 
 export {
