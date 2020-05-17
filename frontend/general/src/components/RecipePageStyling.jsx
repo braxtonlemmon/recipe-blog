@@ -60,8 +60,14 @@ const StepsBox = styled(InfoBox)`
   grid-area: steps;
   @media (min-width: 1000px) {
     border-left: 2px dashed black;
-    justify-self: left;
-    
+    justify-self: left; 
+  }
+  .sidenote {
+    font-style: italic;
+    font-size: 0.9em;
+  }
+  ul {
+    margin-top: 20px;
   }
 `;
 
@@ -152,7 +158,10 @@ const Step = styled.li`
     display: flex;
     align-items: center;
     cursor: pointer;
+    text-decoration: ${props => props.done ? 'line-through' : 'none'};
   }
+
+
 
   input:checked + label {
     color: lightgrey;

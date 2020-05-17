@@ -11,13 +11,11 @@ const HeaderBar = styled.div`
   display: flex;
   width: 100%;
   padding: 10px;
-  height: 3em;
   background: white;
   align-items: center;
   justify-content: space-between;
   border-bottom: 3px dashed black;
   z-index: 10;
-
 `;
 
 const MyH1 = styled(H1)`
@@ -28,18 +26,26 @@ const MyH1 = styled(H1)`
 `;
 
 const Buttons = styled.div`
-  display: flex;
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
 `;
 
 const Button = styled.button`
   display: flex;
+  background-color: #754c4ccf;
+  color: white;
   justify-content: center;
   align-items: center;
-  padding: 8px;
-  border: 2px solid black;
+  padding: 7px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
   &:hover {
-    background: lightyellow;
+    box-shadow: -2px 2px 2px darkgrey;
+    transform: scale(1.01);
   }
   outline: none;
 `;
@@ -47,7 +53,9 @@ const Button = styled.button`
 function Header() {
   return (
     <HeaderBar>
-      <MyH1>Remember To Cook</MyH1>
+      <Link to='/'>
+        <MyH1>decoded recipes</MyH1>
+      </Link>
       <Buttons>
         <Link to='/'><Button>Recipes</Button></Link>
         <Link to='/About'><Button>About</Button></Link>

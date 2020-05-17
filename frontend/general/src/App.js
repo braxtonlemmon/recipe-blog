@@ -17,8 +17,8 @@ const Wrapper = styled.div`
 
 const Main = styled.div`
   display: flex;
-  margin-top: 3.5em;
-  align-items: center;
+  margin-top: 5em;
+  /* align-items: center; */
   justify-content: center;
   height: 100%;
   width: 100%;

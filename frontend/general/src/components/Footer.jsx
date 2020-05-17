@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Wrapper = styled.footer`
-  background: #754c4c;
+  background: #754c4ccf;
   width: 100%;
   flex-shrink: 0;
   color: white;
@@ -21,6 +21,9 @@ const Links = styled.div`
   a {
     color: white;
     margin: 0 10px;
+    &:hover {
+      color: lightgray;
+    }
   }
   padding-bottom: 10px;
   margin-bottom: 10px;
@@ -45,7 +48,7 @@ function Footer() {
       </Links>
       <Copyright>
         <span role="img" aria-label="copyright">©</span>
-        <span>2020 - Remember to Cook</span>
+        <span>2020 - Remember to Cook. All rights reserved.</span>
       </Copyright>
     </Wrapper>
   )

@@ -24,12 +24,14 @@ function RecipePage() {
   const { id } = useParams();
 
   const handleScroll = () => {
-    const ingredientsBox = document.getElementById('ingredients-box').getBoundingClientRect();
-    const stepsBox = document.getElementById('steps-box').getBoundingClientRect();
-    if (stepsBox.top <= 55 && ingredientsBox.height < window.innerHeight - 150) {
-      setIngredientsFixed(true);
-    } else if (stepsBox.top > 55) {
-      setIngredientsFixed(false);
+    if (commentsLoaded && recipeLoaded) {
+      const ingredientsBox = document.getElementById('ingredients-box').getBoundingClientRect();
+      const stepsBox = document.getElementById('steps-box').getBoundingClientRect();
+      if (stepsBox.top <= 55 && ingredientsBox.height < window.innerHeight - 150) {
+        setIngredientsFixed(true);
+      } else if (stepsBox.top > 55) {
+        setIngredientsFixed(false);
+      }
     }
   }
 
@@ -116,9 +118,13 @@ function RecipePage() {
         </IngredientsBox>
         <StepsBox id="steps-box">
           <H2>Steps</H2>
+          <p className='sidenote'>***click each step as you go to keep track of your progress***</p>
           <ul>
             {recipe.steps.map((step, index) => (
-              <Step key={step}>
+              <Step 
+                key={step}
+                done={checkboxes[`step-checkbox-${index}`]}
+              >
                 <div className="step-box-holder">
                   <input 
                     type="checkbox" 
