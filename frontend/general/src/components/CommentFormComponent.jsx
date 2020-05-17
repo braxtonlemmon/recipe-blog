@@ -58,6 +58,7 @@ function CommentFormComponent(props) {
           cols="30" 
           rows="10"
           required
+          min="2"
           placeholder="Your comment here..."
           value={props.data.content}
           onChange={props.handleChange}

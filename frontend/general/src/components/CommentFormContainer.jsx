@@ -14,6 +14,9 @@ function CommentFormContainer(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (data.content.length < 1 || data.content.length > 1000) {
+      return alert('wrongo');
+    }
     setData({ name: '', content: '' });
     fetch('/comments/', {
       method: 'POST',
