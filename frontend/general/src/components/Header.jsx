@@ -20,6 +20,8 @@ const HeaderBar = styled.div`
 
 const MyH1 = styled(H1)`
   font-size: 1.4em;
+  margin: 0;
+  padding: 0;
   @media (min-width: 600px) {
     font-size: 2.2em;
   }
@@ -28,6 +30,7 @@ const MyH1 = styled(H1)`
 const Buttons = styled.div`
   display: grid;
   justify-items: center;
+  align-items: center;
   grid-template-columns: repeat(3, 1fr);
   gap: 5px;
 `;
