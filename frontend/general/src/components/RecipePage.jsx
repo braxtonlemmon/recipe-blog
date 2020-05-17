@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import CommentBox from './CommentBox';
-import CommentForm from './CommentFormContainer';
+import Comments from './Comments';
 import { H2 } from './Shared'; 
 import { 
   Wrapper, 
@@ -16,15 +15,54 @@ import {
 
 function RecipePage() {
   const [recipe, setRecipe] = useState({});
-  const [comments, setComments] = useState([]);
   const [recipeLoaded, setRecipeLoaded] = useState(false);
-  const [commentsLoaded, setCommentsLoaded] = useState(false);
   const [ingredientsFixed, setIngredientsFixed] = useState(false);
   const [checkboxes, setCheckboxes] = useState({});
   const { id } = useParams();
 
-  const handleScroll = () => {
-    if (commentsLoaded && recipeLoaded) {
+  
+  // Fetch recipe data from db
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    fetch(`/recipes/${id}`, { signal: abortController.signal })
+    .then(result => result.json())
+    .then(data => setRecipe(data.data))
+    .then(() => {
+      console.log('1: recipe loaded')
+      setRecipeLoaded(true);
+    })
+    .catch(err => {
+      console.error('Request failed', err);
+    });
+
+    return () => abortController.abort();
+  }, [id])
+  
+  // Get checkbox data from localStorage and store in state
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem(recipe._id));
+    if (recipeLoaded && data === null) {
+      localStorage.setItem(recipe._id, JSON.stringify({}));
+    } else {
+      setCheckboxes({...data})
+    }
+    console.log('3: checkbox data loaded');
+  }, [recipeLoaded, recipe]);
+
+  // Add scroll event listener for ingredients box
+  useEffect(() => {
+    console.log('event listener adding...');
+    if (recipeLoaded) {
+      window.addEventListener('scroll', handleScroll)
+    }
+    console.log('4: scroll event added');
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [recipeLoaded]);
+
+  function handleScroll() {
+    if (recipeLoaded) {
+      console.log('inside handle scroll');
       const ingredientsBox = document.getElementById('ingredients-box').getBoundingClientRect();
       const stepsBox = document.getElementById('steps-box').getBoundingClientRect();
       if (stepsBox.top <= 55 && ingredientsBox.height < window.innerHeight - 150) {
@@ -35,62 +73,14 @@ function RecipePage() {
     }
   }
 
-  const handleCheck = (e) => {
+  function handleCheck(e) {
     const data = JSON.parse(localStorage.getItem(recipe._id));
     data[e.target.id] = e.target.checked;
     localStorage.setItem(recipe._id, JSON.stringify(data));
-    setCheckboxes(data); 
+    setCheckboxes(data);
   }
-  
-  // Get checkbox data from localStorage and store in state
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem(recipe._id));
-    if (recipeLoaded && data === null) {
-      localStorage.setItem(recipe._id, JSON.stringify({}));
-    } else {
-      setCheckboxes({...data})
-    }
-  }, [recipeLoaded, recipe]);
 
-  // Fetch recipe data from db
-  useEffect(() => {
-    const abortController = new AbortController();
-
-    fetch(`/recipes/${id}`, { signal: abortController.signal })
-    .then(result => result.json())
-    .then(data => setRecipe(data.data))
-    .then(() => setRecipeLoaded(true))
-    .catch(err => {
-      console.error('Request failed', err);
-    });
-
-    return () => abortController.abort();
-  }, [id])
-
-  // Fetch comments data from db
-  useEffect(() => {
-    const abortController = new AbortController();
-    
-    fetch(`/comments/${id}`, { signal: abortController.signal })
-    .then(result => result.json())
-    .then(data => setComments(data.data))
-    .then(() => setCommentsLoaded(true))
-    .catch(err => console.error('Request failed', err));
-
-    return () => {
-      abortController.abort();
-    };
-  }, [commentsLoaded, id])
-
-  // Add scroll event listener for ingredients box
-  useEffect(() => {
-    if (recipeLoaded && commentsLoaded) {  
-      window.addEventListener('scroll', handleScroll)
-    }
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [recipeLoaded, commentsLoaded])
-
-  if (recipeLoaded && commentsLoaded) {
+  if (recipeLoaded) {
     return (
       <Wrapper>
         <MyH1>{recipe.title}</MyH1>
@@ -139,11 +129,10 @@ function RecipePage() {
             ))}
           </ul>
         </StepsBox>
-        <CommentForm 
+        <Comments
           recipe={recipe}
-          setCommentsLoaded={setCommentsLoaded}
+          id={id}
         />
-        <CommentBox comments={comments} />
       </Wrapper>
     );
   } else {
