@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('regenerator-runtime/runtime');
 import createError from 'http-errors';
 import express from 'express';
 import path from 'path';
@@ -39,6 +40,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
+app.get('/test', (req, res) => {
+  res.json({ message: 'pass!' });
+});
 app.use('/users',     routes.users);
 app.use('/recipes', routes.recipes);
 app.use('/auth', routes.auth);

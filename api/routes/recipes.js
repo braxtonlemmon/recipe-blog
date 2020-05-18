@@ -4,6 +4,9 @@ import passport from 'passport';
 
 const router = Router();
 
+router.get('/okay', (req, res) => {
+  res.json({ name: 'frodo' });
+});
 router.get('/', recipeController.indexRecipes);
 router.get('/published', recipeController.indexPublishedRecipes);
 router.post('/', passport.authenticate('jwt', { session: false }), recipeController.createRecipe);

@@ -5,11 +5,18 @@
   "scripts": {
     "start": "node --exec babel-node ./bin/www",
     "devstart": "nodemon --exec babel-node ./bin/www",
-    "serverstart": "DEBUG=recipe-blog:* npm run devstart"
+    "serverstart": "DEBUG=recipe-blog:* npm run devstart",
+    "test": "jest",
+    "watch": "jest --watch *.js"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "dependencies": {
+    "@shelf/jest-mongodb": "^1.1.5",
     "async": "^3.2.0",
     "aws-sdk": "^2.675.0",
+    "babel-jest": "^26.0.1",
     "bcrypt": "^4.0.1",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
@@ -32,12 +39,16 @@
     "multer-s3": "^2.9.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "regenerator-runtime": "^0.13.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
+    "@babel/core": "^7.9.6",
     "@babel/node": "^7.8.7",
-    "@babel/preset-env": "^7.9.5",
-    "nodemon": "^2.0.3"
+    "@babel/preset-env": "^7.9.6",
+    "jest": "^26.0.1",
+    "mongodb-memory-server": "^6.6.0",
+    "nodemon": "^2.0.3",
+    "supertest": "^4.0.2"
   }
 }
