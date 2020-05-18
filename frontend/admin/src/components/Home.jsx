@@ -1,8 +1,10 @@
 import React from 'react';
+import { H1 } from './Shared';
 
 function Home() {
   return (
-    <h1>HOME</h1>
+    <H1>Home</H1>
+
   )
 }
 

@@ -50,8 +50,8 @@ function userCreate(username, password, cb) {
   });
 }
 
-function recipeCreate(title, ingredients, steps, intro, quote, image, published, created, cb) {
-  recipedetail = { title, ingredients, steps, intro, quote, image, published, created };
+function recipeCreate(title, ingredients, steps, intro, quote, image, is_published, publish_date, created, cb) {
+  recipedetail = { title, ingredients, steps, intro, quote, image, is_published, publish_date, created };
   const recipe = new Recipe(recipedetail);
   recipe.save(err => {
     if (err) {
@@ -105,6 +105,7 @@ function createRecipes(cb) {
           'Yummmm',
           'https://cdn.pixabay.com/photo/2020/02/17/17/10/bread-4857068_960_720.jpg',
           false,
+          '',
           Date.now(),
           callback
         );
@@ -137,6 +138,7 @@ function createRecipes(cb) {
           "Doesn't need to be reheated!",
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Spanish_Tortilla_%285845088254%29.jpg/800px-Spanish_Tortilla_%285845088254%29.jpg',
           false,
+          '',
           Date.now(),
           callback
         );
@@ -150,6 +152,7 @@ function createRecipes(cb) {
           'Breakfast, lunch, dinner',
           'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bowl_of_Cereal_%28Unsplash%29.jpg/800px-Bowl_of_Cereal_%28Unsplash%29.jpg',
           false,
+          '',
           Date.now(),
           callback
         );

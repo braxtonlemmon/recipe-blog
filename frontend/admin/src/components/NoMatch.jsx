@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { H1 } from './Shared';
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,7 +12,7 @@ const Wrapper = styled.div`
 function NoMatch() {
   return (
     <Wrapper>
-      <h1>404</h1>
+      <H1>404</H1>
       <p>Sorry little chef, that is an invalid page. Try again.</p>
     </Wrapper>
   )

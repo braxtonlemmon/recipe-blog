@@ -17,7 +17,7 @@ const indexRecipes = (req, res, next) => {
 }
 
 const indexPublishedRecipes = (req, res, next) => {
-  Recipe.find({ published: true })
+  Recipe.find({ is_published: true })
   .exec(function(err, data) {
     if (err) return res.json({ success: false, error: err });
     data.forEach((recipe) => {
@@ -56,13 +56,17 @@ const createRecipe = [
   body('steps.*').escape(),
 
   (req, res, next) => {
+    console.log(req.file);
+    console.log(req.body);
+    console.log(req.body.is_published === true);
     const errors = validationResult(req);
     const recipe = new Recipe({
       title: req.body.title,
       ingredients: req.body.ingredients,
       steps: req.body.steps,
-      published: req.body.published,
-      image: req.file === undefined ? null : req.file.location
+      is_published: req.body.is_published,
+      publish_date: req.body.is_published === true ? Date.now() : null,
+      image: req.file === undefined ? '' : req.file.location
     })
     if (!errors.isEmpty()) {
       res.send({ recipe: recipe, errors: errors.array() });
@@ -71,7 +75,11 @@ const createRecipe = [
     else {
       req.body.intro ? (recipe.intro = req.body.intro) : null;
       recipe.save(function(err) {
-        if (err) { return next(err) }
+        console.log('saving');
+        if (err) { 
+          console.log('problem saving...');
+          return next(err) 
+        }
         res.send(recipe);
       })
     }
@@ -89,21 +97,26 @@ const updateRecipe = [
   body('steps.*').escape(),
 
   (req, res, next) => {
+    console.log(`file: ${req.file}`);
+    console.log(req.body);
+    console.log(req.body.is_published === 'true');
+
     const errors = validationResult(req);
     const originalRecipe = function(callback) {
       Recipe.findById(req.params.id)
       .exec(callback);
     }
+         
     const recipe = new Recipe({
       title: req.body.title,
       ingredients: req.body.ingredients,
       steps: req.body.steps,
-      published: req.body.published,
+      is_published: req.body.is_published,
+      publish_date: Date.now(),
       image: req.file === undefined ? originalRecipe.image : req.file.location, 
       _id: req.params.id
     });
     req.body.intro ? (recipe.intro = req.body.intro) : null;
-    req.body.image ? (recipe.image = req.body.image) : null;
     if (!errors.isEmpty()) {
       res.send(errors.array());
       return;

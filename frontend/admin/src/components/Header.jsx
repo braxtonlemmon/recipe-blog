@@ -1,50 +1,61 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { H1, H2 } from './Shared';
 
 const HeaderBar = styled.div`
+  flex-shrink: 0;
   position: fixed;
   top: 0;
   left: 0;
   display: flex;
   width: 100%;
   padding: 10px;
-  height: 3em;
   background: white;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 4px dashed black;
+  border-bottom: 3px dashed black;
   z-index: 10;
 `;
 
-const H1 = styled.h1`
+const MyH1 = styled(H1)`
   font-size: 1.5em;
   @media (min-width: 600px) {
     font-size: 2.2em;
   }
 `;
 
+const Buttons = styled.div`
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  grid-auto-flow: column;
+  gap: 5px;
+`;
+
 const Button = styled.button`
   display: flex;
+  background-color: #754c4ccf;
+  color: white;
   justify-content: center;
   align-items: center;
-  padding: 8px;
-  border: 2px solid black;
+  padding: 7px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
   &:hover {
-    background: lightyellow;
+    box-shadow: -2px 2px 2px darkgrey;
+    transform: scale(1.01);
   }
   outline: none;
 `;
 
-const Buttons = styled.div`
-  display: flex;
-`;
 
 function Header(props) {
   return (
     <HeaderBar>
-      <H1>Remember To Cook</H1>
+      <MyH1>decoded recipes</MyH1>
       {!props.isLoggedIn && (
         <Buttons>
           <Link to="/login">
@@ -57,7 +68,6 @@ function Header(props) {
           <Link to="/"><Button>Home</Button></Link>
           <Link to="/recipes"><Button>Recipes</Button></Link>
           <Link to="/new"><Button>New</Button></Link>
-          <Link to='/bananas'><Button>Image</Button></Link>
           <Button onClick={props.handleLogout}>Log out</Button>
         </Buttons>
       )}

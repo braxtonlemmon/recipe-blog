@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
+import { H1, H2 } from './Shared';
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,11 +12,12 @@ const Wrapper = styled.div`
 
 const Row = styled.div`
   display: grid;
-  grid-template-columns: 5fr 2fr 2fr 1.2fr 1.2fr;
+  grid-auto-flow: column;
+  /* grid-template-columns: 5fr 2fr 2fr 1.2fr 1.2fr; */
   .item {
     border: 1px solid black;
     text-align: center;
-    padding: 4px;
+    padding: 2px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,6 +27,12 @@ const Row = styled.div`
   }
   .button {
     cursor: pointer;
+  }
+  a {
+    color: #6c6cff;
+    &:hover {
+      color: #1d1dff;
+    }
   }
 `;
 
@@ -67,39 +75,39 @@ function Recipes() {
   if (recipesLoaded) {
     return (
       <Wrapper>
-      <h1>RECIPES</h1>
-      <ul>
-        <Row>
-          <p className="header item">Recipe</p>
-          <p className="header item">Created</p>
-          <p className="header item">Published</p>
-          <p className="header item">Edit</p>
-          <p className="header item">Delete</p>
-        </Row>
-        {recipes.map(recipe => (
-          <Row key={recipe.title}>
-            <div className="item">
-              <Link to={`/recipes/${recipe._id}`}><p>{recipe.title}</p></Link>
-            </div>
-            <div className="item">
-              <p>{recipe.date_formatted}</p>
-            </div>
-            <div className="item">
-              <p>{recipe.published ? 'Yes' : 'No'}</p>
-            </div>
-            <div className="item">
-              <Link to={`/recipes/${recipe._id}/edit`}>
-                <p>edit</p>
-              </Link>
-            </div>
-            <div className="item">
-              <p className='button' onClick={() => handleDelete(recipe._id)}>🗑</p>
-            </div>
+        <H1>Recipes</H1>
+        <ul>
+          <Row>
+            <p className="header item">Recipe</p>
+            <p className="header item">Published</p>
+            <p className="header item"></p>
+            <p className="header item"></p>
           </Row>
-        ))}
-      </ul>
+          {recipes.map((recipe, index) => (
+            <Row key={recipe.title}>
+              <div className="item">
+                <Link to={`/recipes/${recipe._id}`}>
+                  <p>{recipe.title}</p>
+                </Link>
+              </div>
+              <div className="item">
+                <p>{recipe.is_published ? recipe.publish_date_formatted : 'Not yet'}</p>
+              </div>
+              <div className="item">
+                <Link to={`/recipes/${recipe._id}/edit`}>
+                  <p>🖉</p>
+                </Link>
+              </div>
+              <a className="item">
+                <p className="button" onClick={() => handleDelete(recipe._id)}>
+                  🗑️
+                </p>
+              </a>
+            </Row>
+          ))}
+        </ul>
       </Wrapper>
-    )
+    );
   } else {
     return (
       <h1>Loading...</h1>

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { H1 } from './Shared';
 
 const Form = styled.form`
   display: flex;
@@ -58,6 +59,7 @@ const Button = styled.div`
 function RecipeFormComponent(props) {
   return (
     <>
+      <H1>New Recipe</H1>
       <label htmlFor="image">Image</label>
       <input  
         type="file"
@@ -133,12 +135,12 @@ function RecipeFormComponent(props) {
       </Box>
 
       <Box>
-        <label htmlFor="published">Publish?</label>
+        <label htmlFor="is_published">Publish?</label>
         <input 
           type="checkbox" 
-          name="published" 
-          id="published"
-          checked={props.data.published}
+          name="is_published" 
+          id="is_published"
+          checked={props.data.is_published}
           onChange={props.handleChange}
         />
       </Box>

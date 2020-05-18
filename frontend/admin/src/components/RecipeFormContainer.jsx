@@ -13,7 +13,7 @@ function RecipeFormContainer() {
     steps: [''],
     intro: '',
     image: null,
-    published: false,
+    is_published: false,
     created: ''
   })
   
@@ -25,7 +25,8 @@ function RecipeFormContainer() {
       })
       .then(result => result.json())
       .then(final => {
-          setRecipe(final.data)
+          console.log(final.data);
+          setRecipe(final.data);
         })
       .catch(err => console.log('problem!'))
     }
@@ -40,7 +41,7 @@ function RecipeFormContainer() {
         steps: recipe.steps,
         intro: recipe.intro,
         image: recipe.image,
-        published: recipe.published,
+        is_published: recipe.is_published,
         created: recipe.created
       })
     }
@@ -48,7 +49,7 @@ function RecipeFormContainer() {
 
   const handleChange = (e) => {
     const name = e.target.name;
-    const value = e.target.name === 'published' ?
+    const value = e.target.name === 'is_published' ?
       e.target.checked : e.target.value;
     setData({ ...data, [name]: value });
   }
@@ -57,12 +58,13 @@ function RecipeFormContainer() {
     e.preventDefault();
     let formData = new FormData();
     const image = document.getElementById('image');
+
     formData.append('image', image.files[0]);
     formData.append('title', data.title);
     formData.append('ingredients', data.ingredients);
     formData.append('steps', data.steps);
     formData.append('intro', data.intro);
-    formData.append('published', data.published);
+    formData.append('is_published', data.is_published);
     fetch('/recipes', {
       method: 'POST',
       credentials: 'include',
@@ -76,7 +78,7 @@ function RecipeFormContainer() {
       throw new Error('Network response was not okay uploading recipe');
     })
     .then(data => {
-      history.push(`/recipes/${data._id}`);
+      history.push(`/recipes`);
     })
     .catch(err => console.log(err.message));
   }
@@ -85,12 +87,13 @@ function RecipeFormContainer() {
     e.preventDefault();
     let formData = new FormData();
     const image = document.getElementById('image');
+
     formData.append("image", image.files[0]);
     formData.append("title", data.title);
     formData.append("ingredients", data.ingredients);
     formData.append("steps", data.steps);
     formData.append("intro", data.intro);
-    formData.append("published", data.published);
+    formData.append("is_published", data.is_published);
     fetch(`/recipes/${recipeid}`, {
       method: 'PUT',
       credentials: 'include',
@@ -103,7 +106,7 @@ function RecipeFormContainer() {
       throw new Error('Network response was not okay');
     })
     .then(data => {
-      history.push(`/recipes/${recipeid}`);
+      history.push(`/recipes`);
     })
     .catch(err => console.log(err.message));
   }

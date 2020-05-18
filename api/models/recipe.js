@@ -9,7 +9,8 @@ const RecipeSchema = new Schema({
   intro: { type: String },
   quote: { type: String },
   image: { type: String },
-  published: { type: Boolean, required: true, default: false },
+  is_published: { type: Boolean, default: false },
+  publish_date: { type: Date, default: '' },
   created: { type: Date, default: Date.now() }
 });
 
@@ -24,6 +25,11 @@ RecipeSchema.virtual('url')
 RecipeSchema.virtual('date_formatted')
 .get(function () {
   return moment(this.created).format('MMMM Do YYYY')
-})
+});
+
+RecipeSchema.virtual('publish_date_formatted')
+.get(function() {
+  return moment(this.publish_date).format('MMMM Do YYYY')
+});
 
 module.exports = mongoose.model('Recipe', RecipeSchema);

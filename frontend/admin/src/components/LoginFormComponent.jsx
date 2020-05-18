@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { H1 } from './Shared';
 
 const FormWrapper = styled.form`
   display: flex;
@@ -15,10 +16,14 @@ const FormWrapper = styled.form`
   }
 `;
 
+const MyH1 = styled(H1)`
+  margin-bottom: 2em;;
+`
+
 function LoginFormComponent(props) {
   return (
     <FormWrapper name="loginForm">
-      <h2>Login</h2>
+      <MyH1>Login</MyH1>
       <label htmlFor="username">username</label>
       <input 
         type="text"
