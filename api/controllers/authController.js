@@ -22,7 +22,7 @@ const login = [
           if (result) {
             const token = issueJWT(user);
             // const token = utils.issueJWT(user);
-            res.cookie('token', token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true, secure: true, sameSite: false  });
+            res.cookie('token', token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true, secure: true, sameSite: "Lax"  });
             console.log(token);
             return res.json({ token: token, name: user.username })
             // res.json({ token: token.token, expires: token.expires, name: user.username });

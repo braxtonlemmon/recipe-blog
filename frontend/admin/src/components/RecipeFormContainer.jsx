@@ -180,7 +180,7 @@ function RecipeFormContainer() {
         isUpdating={isUpdating}
         handleMove={handleMove}
       />
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
     </>
   );
 }

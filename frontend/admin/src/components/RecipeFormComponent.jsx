@@ -16,7 +16,6 @@ const Form = styled.form`
     line-height: 2.5em;
     outline: none;
   }
-  
   textarea {
     resize: none;
     padding: 5px;
@@ -24,21 +23,37 @@ const Form = styled.form`
     outline: none;
     font-size: 1.1em;
   }
+  h2 {
+    font-size: 1.3em;
+  }
 `;
 
 const Row = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 600px;
+  /* width: 600px; */
   margin: 5px 0;
   padding-bottom: 10px;
   border-bottom: 1px dotted black;
+`;
+
+const RowTop = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+
+const MoveButtons = styled.div`
+  display: flex;
   .direction-button {
     background: black;
     color: white;
     font-weight: bolder;
-    font-size: 1.5em; 
+    font-size: 1em;
+    margin: 3px 5px; 
   }
 `;
 
@@ -49,6 +64,20 @@ const Box = styled.div`
   align-items: center;
   padding: 10px;
   margin: 8px;
+  .add-button {
+    height: 25px;
+    width: 45px;
+    background: black;
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-top: 5px;
+  }
+  .publish-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const Button = styled.div`
@@ -106,8 +135,14 @@ function RecipeFormComponent(props) {
         <h2>Ingredients</h2>
         {props.data.ingredients.map((ingredient, index) => (
           <Row key={`ingredient~${index}`}>
-            <Button onClick={() => props.handleRemoveIngredient(index)}>{trash}</Button>
-            <label htmlFor="ingredient">Ingredient</label>
+            <RowTop>
+              <Button onClick={() => props.handleRemoveIngredient(index)}>{trash}</Button>
+              <label htmlFor="ingredient">Ingredient {index + 1}</label>
+              <MoveButtons>
+                <Button className="direction-button" onClick={() => props.handleMove(index, 'ingredient', 'up')}>{up}</Button>
+                <Button className="direction-button" onClick={() => props.handleMove(index, 'ingredient', 'down')}>{down}</Button>
+              </MoveButtons>
+            </RowTop>
             <input
               type="text"
               id="ingredient"
@@ -116,11 +151,12 @@ function RecipeFormComponent(props) {
               value={props.data.ingredients[index]}
               onChange={(e) => props.handleInputChange(index, e)}
             />
-            <Button className="direction-button" onClick={() => props.handleMove(index, 'ingredient', 'up')}>{up}</Button>
-            <Button className="direction-button" onClick={() => props.handleMove(index, 'ingredient', 'down')}>{down}</Button>
           </Row>
         ))}
-        <Button onClick={props.handleAddIngredient}>+</Button>
+        <Button 
+          className="add-button"
+          onClick={props.handleAddIngredient}
+        >+</Button>
 
       </Box>
 
@@ -128,33 +164,42 @@ function RecipeFormComponent(props) {
         <h2>Steps</h2>
         {props.data.steps.map((step, index) => (
           <Row key={`step~${index}`}>
-            <Button onClick={() => props.handleRemoveStep(index)}>{trash}</Button>
-            <label htmlFor="step">{`Step ${index + 1}`}</label>
+            <RowTop>
+              <Button onClick={() => props.handleRemoveStep(index)}>{trash}</Button>
+              <label htmlFor="step">{`Step ${index + 1}`}</label>
+              <MoveButtons>
+                <Button className="direction-button" onClick={() => props.handleMove(index, 'step', 'up')}>{up}</Button>
+                <Button className="direction-button" onClick={() => props.handleMove(index, 'step', 'down')}>{down}</Button>
+              </MoveButtons>
+            </RowTop>
             <textarea
               id="step"
               name="step"
               placeholder="Step"
-              cols="35"
+              cols="25"
               rows="4"
               value={props.data.steps[index]}
               onChange={(e) => props.handleInputChange(index, e)}
             ></textarea>
-            <Button className="direction-button" onClick={() => props.handleMove(index, 'step', 'up')}>{up}</Button>
-            <Button className="direction-button" onClick={() => props.handleMove(index, 'step', 'down')}>{down}</Button>
           </Row>
         ))}
-        <Button onClick={props.handleAddStep}>+</Button>
+        <Button 
+          className="add-button" 
+          onClick={props.handleAddStep}
+        >+</Button>
       </Box>
 
       <Box>
-        <label htmlFor="is_published">Publish?</label>
-        <input 
-          type="checkbox" 
-          name="is_published" 
-          id="is_published"
-          checked={props.data.is_published}
-          onChange={props.handleChange}
-        />
+        <div className="publish-row">
+          <label htmlFor="is_published">Publish?</label>
+          <input 
+            type="checkbox" 
+            name="is_published" 
+            id="is_published"
+            checked={props.data.is_published}
+            onChange={props.handleChange}
+          />
+        </div>
       </Box>
       <button 
         onClick={props.isUpdating ? props.handleUpdate : props.handleSubmit}
