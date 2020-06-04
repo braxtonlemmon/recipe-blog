@@ -7,6 +7,7 @@ const Wrapper = styled.ul`
   /* display: grid; */
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   grid-template-columns: repeat(auto-fill, 260px);
   justify-content: center;
   gap: 10px;

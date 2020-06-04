@@ -30,7 +30,7 @@ const Row = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 450px;
+  width: 600px;
   margin: 5px 0;
   padding-bottom: 10px;
   border-bottom: 1px dotted black;
@@ -57,6 +57,10 @@ const Button = styled.div`
 `;
 
 function RecipeFormComponent(props) {
+  const down = '↓';
+  const up = '↑';
+  const trash = '🗑';
+
   return (
     <>
       <H1>New Recipe</H1>
@@ -97,6 +101,7 @@ function RecipeFormComponent(props) {
         <h2>Ingredients</h2>
         {props.data.ingredients.map((ingredient, index) => (
           <Row key={`ingredient~${index}`}>
+            <Button onClick={() => props.handleRemoveIngredient(index)}>{trash}</Button>
             <label htmlFor="ingredient">Ingredient</label>
             <input
               type="text"
@@ -106,18 +111,19 @@ function RecipeFormComponent(props) {
               value={props.data.ingredients[index]}
               onChange={(e) => props.handleInputChange(index, e)}
             />
-            <Button onClick={() => props.handleRemoveIngredient(index)}>
-              -
-            </Button>
+            <Button>{up}</Button>
+            <Button>{down}</Button>
           </Row>
         ))}
         <Button onClick={props.handleAddIngredient}>+</Button>
+
       </Box>
 
       <Box>
         <h2>Steps</h2>
         {props.data.steps.map((step, index) => (
           <Row key={`step~${index}`}>
+            <Button onClick={() => props.handleRemoveStep(index)}>{trash}</Button>
             <label htmlFor="step">{`Step ${index + 1}`}</label>
             <textarea
               id="step"
@@ -128,7 +134,8 @@ function RecipeFormComponent(props) {
               value={props.data.steps[index]}
               onChange={(e) => props.handleInputChange(index, e)}
             ></textarea>
-            <Button onClick={() => props.handleRemoveStep(index)}>-</Button>
+            <Button>{up}</Button>
+            <Button>{down}</Button>
           </Row>
         ))}
         <Button onClick={props.handleAddStep}>+</Button>
