@@ -56,9 +56,6 @@ const createRecipe = [
   body('steps.*').escape(),
 
   (req, res, next) => {
-    console.log(req.file);
-    console.log(req.body);
-    console.log(req.body.is_published === true);
     const errors = validationResult(req);
     const recipe = new Recipe({
       title: req.body.title,
@@ -97,16 +94,11 @@ const updateRecipe = [
   body('steps.*').escape(),
 
   (req, res, next) => {
-    console.log(`file: ${req.file}`);
-    console.log(req.body);
-    console.log(req.body.is_published === 'true');
-
     const errors = validationResult(req);
     const originalRecipe = function(callback) {
       Recipe.findById(req.params.id)
       .exec(callback);
-    }
-         
+    }    
     const recipe = new Recipe({
       title: req.body.title,
       ingredients: JSON.parse(req.body.ingredients),
@@ -116,7 +108,6 @@ const updateRecipe = [
       image: req.file === undefined ? originalRecipe.image : req.file.location, 
       _id: req.params.id
     });
-    console.log(recipe)
     req.body.intro ? (recipe.intro = req.body.intro) : null;
     if (!errors.isEmpty()) {
       res.send(errors.array());

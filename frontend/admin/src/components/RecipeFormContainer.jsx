@@ -90,8 +90,8 @@ function RecipeFormContainer() {
 
     formData.append("image", image.files[0]);
     formData.append("title", data.title);
-    formData.append("ingredients", data.ingredients);
-    formData.append("steps", data.steps);
+    formData.append("ingredients", JSON.stringify(data.ingredients));
+    formData.append("steps", JSON.stringify(data.steps));
     formData.append("intro", data.intro);
     formData.append("is_published", data.is_published);
     fetch(`/recipes/${recipeid}`, {

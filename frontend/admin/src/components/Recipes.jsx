@@ -14,6 +14,7 @@ const Row = styled.div`
   display: grid;
   grid-auto-flow: column;
   /* grid-template-columns: 5fr 2fr 2fr 1.2fr 1.2fr; */
+  grid-template-columns: 2fr 1fr 20px 20px;
   .item {
     border: 1px solid black;
     text-align: center;
