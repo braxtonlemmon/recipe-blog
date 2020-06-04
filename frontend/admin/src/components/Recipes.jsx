@@ -13,12 +13,11 @@ const Wrapper = styled.div`
 const Row = styled.div`
   display: grid;
   grid-auto-flow: column;
-  /* grid-template-columns: 5fr 2fr 2fr 1.2fr 1.2fr; */
-  grid-template-columns: 2fr 1fr 20px 20px;
+  grid-template-columns: 1.5fr 1fr 25px 25px;
   .item {
     border: 1px solid black;
     text-align: center;
-    padding: 2px;
+    padding: 8px 5px;
     display: flex;
     justify-content: center;
     align-items: center;
