@@ -62,8 +62,8 @@ const createRecipe = [
     const errors = validationResult(req);
     const recipe = new Recipe({
       title: req.body.title,
-      ingredients: req.body.ingredients,
-      steps: req.body.steps,
+      ingredients: JSON.parse(req.body.ingredients),
+      steps: JSON.parse(req.body.steps),
       is_published: req.body.is_published,
       publish_date: req.body.is_published === true ? Date.now() : null,
       image: req.file === undefined ? '' : req.file.location
@@ -109,13 +109,14 @@ const updateRecipe = [
          
     const recipe = new Recipe({
       title: req.body.title,
-      ingredients: req.body.ingredients,
-      steps: req.body.steps,
+      ingredients: JSON.parse(req.body.ingredients),
+      steps: JSON.parse(req.body.steps),
       is_published: req.body.is_published,
       publish_date: Date.now(),
       image: req.file === undefined ? originalRecipe.image : req.file.location, 
       _id: req.params.id
     });
+    console.log(recipe)
     req.body.intro ? (recipe.intro = req.body.intro) : null;
     if (!errors.isEmpty()) {
       res.send(errors.array());

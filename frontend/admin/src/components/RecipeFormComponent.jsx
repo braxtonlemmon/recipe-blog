@@ -34,6 +34,12 @@ const Row = styled.div`
   margin: 5px 0;
   padding-bottom: 10px;
   border-bottom: 1px dotted black;
+  .direction-button {
+    background: black;
+    color: white;
+    font-weight: bolder;
+    font-size: 1.5em; 
+  }
 `;
 
 const Box = styled.div`
@@ -47,7 +53,6 @@ const Box = styled.div`
 
 const Button = styled.div`
   cursor: pointer;
-  border: 1px solid black;
   height: 20px;
   width: 20px;
   display: flex;
@@ -111,8 +116,8 @@ function RecipeFormComponent(props) {
               value={props.data.ingredients[index]}
               onChange={(e) => props.handleInputChange(index, e)}
             />
-            <Button>{up}</Button>
-            <Button>{down}</Button>
+            <Button className="direction-button" onClick={() => props.handleMove(index, 'ingredient', 'up')}>{up}</Button>
+            <Button className="direction-button" onClick={() => props.handleMove(index, 'ingredient', 'down')}>{down}</Button>
           </Row>
         ))}
         <Button onClick={props.handleAddIngredient}>+</Button>
@@ -134,8 +139,8 @@ function RecipeFormComponent(props) {
               value={props.data.steps[index]}
               onChange={(e) => props.handleInputChange(index, e)}
             ></textarea>
-            <Button>{up}</Button>
-            <Button>{down}</Button>
+            <Button className="direction-button" onClick={() => props.handleMove(index, 'step', 'up')}>{up}</Button>
+            <Button className="direction-button" onClick={() => props.handleMove(index, 'step', 'down')}>{down}</Button>
           </Row>
         ))}
         <Button onClick={props.handleAddStep}>+</Button>

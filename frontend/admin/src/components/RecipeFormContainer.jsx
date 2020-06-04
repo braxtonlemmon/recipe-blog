@@ -61,8 +61,8 @@ function RecipeFormContainer() {
 
     formData.append('image', image.files[0]);
     formData.append('title', data.title);
-    formData.append('ingredients', data.ingredients);
-    formData.append('steps', data.steps);
+    formData.append('ingredients', JSON.stringify(data.ingredients));
+    formData.append('steps', JSON.stringify(data.steps));
     formData.append('intro', data.intro);
     formData.append('is_published', data.is_published);
     fetch('/recipes', {
@@ -125,6 +125,21 @@ function RecipeFormContainer() {
     }
   }
 
+  const handleMove = (index, type, direction) => {
+    const values = type === 'step' ? [...data.steps] : [...data.ingredients];
+    const hold = values[index];
+    if (direction === 'down' && index < values.length - 1) {
+      values[index] = values[index + 1];
+      values[index + 1] = hold;
+      type === 'step' ? setData({...data, steps: values}) : setData({...data, ingredients: values});
+    }
+    else if (direction === 'up' && index > 0) {
+      values[index] = values[index - 1];
+      values[index - 1] = hold;
+      type === 'step' ? setData({ ...data, steps: values }) : setData({ ...data, ingredients: values });
+    }
+  }
+
   const handleAddIngredient = () => {
     const values = [...data.ingredients];
     values.push('');
@@ -163,6 +178,7 @@ function RecipeFormContainer() {
         handleRemoveStep={handleRemoveStep}
         handleUpdate={handleUpdate}
         isUpdating={isUpdating}
+        handleMove={handleMove}
       />
       <pre>{JSON.stringify(data, null, 2)}</pre>
     </>
@@ -171,79 +187,4 @@ function RecipeFormContainer() {
 
 export default RecipeFormContainer;
 
-
-
-
-/////////////////
-// Version with ingredients and steps as array of objects //
-/////////////////
-
-// import React, { useState } from 'react';
-// import RecipeFormComponent from './RecipeFormComponent';
-// import styled from 'styled-components';
-
-// const Wrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   margin-bottom: 100px;
-// `;
-
-// function RecipeFormContainer() {
-//   const [data, setData] = useState({
-//     title: '',
-//     ingredients: [{ingredient: ''}, {ingredient: ''}],
-//     steps: [{step: ''}],
-//     intro: '',
-//     image: null,
-//     published: false,
-//     created: ''
-//   })
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setData({ ...data, [name]: value });
-//   }
-
-//   const handleSubmit = () => {
-//     console.log('submitting...');
-//   }
-
-//   const handleInputChange = (index, e) => {
-//     console.log(e.target.value);
-//     const values = [...data.ingredients];
-//     values[index].ingredient = e.target.value;
-//     setData({...data, ingredients: values});
-//   }
-
-//   const handleAddIngredient = () => {
-//     const values = [...data.ingredients];
-//     values.push({ingredient: ''});
-//     setData({...data, ingredients: values});
-//   }
-
-//   const handleRemoveIngredient = (index) => {
-//     console.log(index);
-//     const values = [...data.ingredients];
-//     values.splice(index, 1);
-//     setData({...data, ingredients: values});
-//   }
-
-//   return (
-//     <Wrapper>
-//       <RecipeFormComponent 
-//         data={data} 
-//         handleChange={handleChange}
-//         handleSubmit={handleSubmit}
-//         handleInputChange={handleInputChange}
-//         handleAddIngredient={handleAddIngredient}
-//         handleRemoveIngredient={handleRemoveIngredient}
-//       />
-//       <pre>
-//         {JSON.stringify(data, null, 2)}
-//       </pre>
-//     </Wrapper>
-//   )
-// }
-
-// export default RecipeFormContainer;
 
