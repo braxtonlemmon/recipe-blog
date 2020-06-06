@@ -1,6 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { H1 } from './Shared';
+import button from './shared/Button';
+
+const ImageInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 15px;
+  background: lightgrey;
+  padding: 8px;
+`;
 
 const Form = styled.form`
   display: flex;
@@ -26,6 +37,12 @@ const Form = styled.form`
   h2 {
     font-size: 1.3em;
   }
+  .ingredients-box, .steps-box {
+    background: none;
+  }
+  .publish-box {
+    background: none;
+  }
 `;
 
 const Row = styled.div`
@@ -33,10 +50,10 @@ const Row = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  /* width: 600px; */
   margin: 5px 0;
+  background: lightgray;
+  padding: 8px;
   padding-bottom: 10px;
-  border-bottom: 1px dotted black;
 `;
 
 const RowTop = styled.div`
@@ -44,17 +61,22 @@ const RowTop = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  font-size: 1em;
+  line-height: 1.1em;
+  margin-bottom: 10px;
+
+`;
+
+const Button = styled(button)`
+  padding: 5px 15px;
+  font-size: 1em;
 `;
 
 const MoveButtons = styled.div`
-  display: flex;
-  .direction-button {
-    background: black;
-    color: white;
-    font-weight: bolder;
-    font-size: 1em;
-    margin: 3px 5px; 
-  }
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+
 `;
 
 const Box = styled.div`
@@ -64,30 +86,17 @@ const Box = styled.div`
   align-items: center;
   padding: 10px;
   margin: 8px;
-  .add-button {
-    height: 25px;
-    width: 45px;
-    background: black;
-    color: white;
-    cursor: pointer;
-    border-radius: 8px;
-    margin-top: 5px;
-  }
   .publish-row {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-`;
-
-const Button = styled.div`
-  cursor: pointer;
-  height: 20px;
-  width: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  .publish-row >* {
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  background: lightgrey;
+  padding: 8px;
 `;
 
 function RecipeFormComponent(props) {
@@ -97,13 +106,15 @@ function RecipeFormComponent(props) {
 
   return (
     <>
-      <H1>New Recipe</H1>
+    <H1>New Recipe</H1>
+    <ImageInput>
       <label htmlFor="image">Image</label>
-      <input  
+      <input
         type="file"
         id="image"
         name="image"
       />
+    </ImageInput>
     <Form name="recipeForm">
       
       <Box>
@@ -131,16 +142,16 @@ function RecipeFormComponent(props) {
         ></textarea>
       </Box>
 
-      <Box>
+      <Box className="ingredients-box">
         <h2>Ingredients</h2>
         {props.data.ingredients.map((ingredient, index) => (
           <Row key={`ingredient~${index}`}>
             <RowTop>
-              <Button onClick={() => props.handleRemoveIngredient(index)}>{trash}</Button>
+              <Button onClick={(e) => props.handleRemoveIngredient(e, index)}>{trash}</Button>
               <label htmlFor="ingredient">Ingredient {index + 1}</label>
               <MoveButtons>
-                <Button className="direction-button" onClick={() => props.handleMove(index, 'ingredient', 'up')}>{up}</Button>
-                <Button className="direction-button" onClick={() => props.handleMove(index, 'ingredient', 'down')}>{down}</Button>
+                <Button onClick={(e) => props.handleMove(e, index, 'ingredient', 'up')}>{up}</Button>
+                <Button onClick={(e) => props.handleMove(e, index, 'ingredient', 'down')}>{down}</Button>
               </MoveButtons>
             </RowTop>
             <input
@@ -154,22 +165,21 @@ function RecipeFormComponent(props) {
           </Row>
         ))}
         <Button 
-          className="add-button"
           onClick={props.handleAddIngredient}
         >+</Button>
 
       </Box>
 
-      <Box>
+      <Box className="steps-box">
         <h2>Steps</h2>
         {props.data.steps.map((step, index) => (
           <Row key={`step~${index}`}>
             <RowTop>
-              <Button onClick={() => props.handleRemoveStep(index)}>{trash}</Button>
+              <Button onClick={(e) => props.handleRemoveStep(e, index)}>{trash}</Button>
               <label htmlFor="step">{`Step ${index + 1}`}</label>
               <MoveButtons>
-                <Button className="direction-button" onClick={() => props.handleMove(index, 'step', 'up')}>{up}</Button>
-                <Button className="direction-button" onClick={() => props.handleMove(index, 'step', 'down')}>{down}</Button>
+                <Button onClick={(e) => props.handleMove(e, index, 'step', 'up')}>{up}</Button>
+                <Button onClick={(e) => props.handleMove(e, index, 'step', 'down')}>{down}</Button>
               </MoveButtons>
             </RowTop>
             <textarea
@@ -184,12 +194,11 @@ function RecipeFormComponent(props) {
           </Row>
         ))}
         <Button 
-          className="add-button" 
           onClick={props.handleAddStep}
         >+</Button>
       </Box>
 
-      <Box>
+      <Box className="publish-box">
         <div className="publish-row">
           <label htmlFor="is_published">Publish?</label>
           <input 
@@ -201,11 +210,11 @@ function RecipeFormComponent(props) {
           />
         </div>
       </Box>
-      <button 
+      <Button 
         onClick={props.isUpdating ? props.handleUpdate : props.handleSubmit}
       >
         Submit
-      </button>
+      </Button>
     </Form>
     <form id="upload_form" enctype="multipart/form-data"></form>
     </>

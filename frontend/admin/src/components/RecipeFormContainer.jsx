@@ -125,7 +125,8 @@ function RecipeFormContainer() {
     }
   }
 
-  const handleMove = (index, type, direction) => {
+  const handleMove = (e, index, type, direction) => {
+    e.preventDefault();
     const values = type === 'step' ? [...data.steps] : [...data.ingredients];
     const hold = values[index];
     if (direction === 'down' && index < values.length - 1) {
@@ -140,26 +141,30 @@ function RecipeFormContainer() {
     }
   }
 
-  const handleAddIngredient = () => {
+  const handleAddIngredient = (e) => {
+    e.preventDefault();
     const values = [...data.ingredients];
     values.push('');
     setData({...data, ingredients: values});
   }
 
-  const handleRemoveIngredient = (index) => {
+  const handleRemoveIngredient = (e, index) => {
+    e.preventDefault();
     console.log(index);
     const values = [...data.ingredients];
     values.splice(index, 1);
     setData({...data, ingredients: values});
   }
 
-  const handleAddStep = () => {
+  const handleAddStep = (e) => {
+    e.preventDefault();
     const values = [...data.steps];
     values.push('');
     setData({...data, steps: values});
   }
 
-  const handleRemoveStep = (index) => {
+  const handleRemoveStep = (e, index) => {
+    e.preventDefault();
     const values = [...data.steps];
     values.splice(index, 1);
     setData({...data, steps: values});

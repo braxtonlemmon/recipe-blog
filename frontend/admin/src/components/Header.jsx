@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { H1, H2 } from './Shared';
+import Button from './shared/Button';
 
 const HeaderBar = styled.div`
   flex-shrink: 0;
@@ -32,25 +33,6 @@ const Buttons = styled.div`
   grid-auto-flow: column;
   gap: 5px;
 `;
-
-const Button = styled.button`
-  display: flex;
-  background-color: #754c4ccf;
-  color: white;
-  justify-content: center;
-  align-items: center;
-  padding: 7px;
-  font-size: 1.1em;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  &:hover {
-    box-shadow: -2px 2px 2px darkgrey;
-    transform: scale(1.01);
-  }
-  outline: none;
-`;
-
 
 function Header(props) {
   return (
