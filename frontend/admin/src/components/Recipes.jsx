@@ -51,27 +51,30 @@ function Recipes() {
   }, [])
 
   const handleDelete = (id) => {
-    fetch(`/recipes/${id}`, {
-      method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        recipeid: id
+    const verify = window.confirm('Are you sure you want to delete this recipe?');
+    if (verify === true) {
+      fetch(`/recipes/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          recipeid: id
+        })
       })
-    })
-    .then(response => {
-      if (response.ok && response.status === 200) {
-        history.push('/recipes');
-        return response.json();
-      }
-      throw new Error('Network response was not okay.');
-    })
-    .catch(err => console.log(err.message));
+      .then(response => {
+        if (response.ok && response.status === 200) {
+          history.push('/recipes');
+          return response.json();
+        }
+        throw new Error('Network response was not okay.');
+      })
+      .catch(err => console.log(err.message));
+    }
   }
-
+    
   if (recipesLoaded) {
     return (
       <Wrapper>

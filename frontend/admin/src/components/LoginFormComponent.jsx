@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { H1 } from './Shared';
+import Button from './shared/Button';
 
 const FormWrapper = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-auto-flow: row;
+  gap: 10px;
+  justify-items: center;
   input {
     padding: 6px;
     line-height: 1.4em;
@@ -17,7 +18,7 @@ const FormWrapper = styled.form`
 `;
 
 const MyH1 = styled(H1)`
-  margin-bottom: 2em;;
+  margin-bottom: 2em;
 `
 
 function LoginFormComponent(props) {
@@ -45,11 +46,11 @@ function LoginFormComponent(props) {
         required
       />
 
-      <button
-        onClick={props.handleSubmit}
+      <Button
+        onClick={(e) => props.handleSubmit(e)}
       >
         Login
-      </button>
+      </Button>
     </FormWrapper>
   )
 }

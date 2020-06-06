@@ -24,7 +24,7 @@ function Index() {
   useEffect(() => {
     const abortController = new AbortController();
 
-    fetch('/recipes', { signal: abortController.signal })
+    fetch('/recipes/published', { signal: abortController.signal })
     .then(result => result.json())
     .then(data => setRecipes(data.data))
     .then(() => setRecipesLoaded(true))

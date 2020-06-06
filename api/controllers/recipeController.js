@@ -9,6 +9,7 @@ const indexRecipes = (req, res, next) => {
     data.forEach(recipe => {
       recipe.title = he.decode(recipe.title);
       recipe.intro = he.decode(recipe.intro);
+      recipe.quote = he.decode(recipe.quote);
       recipe.steps = recipe.steps.map(step => he.decode(step));
       recipe.ingredients = recipe.ingredients.map(ingredient => he.decode(ingredient));
     })
@@ -23,6 +24,7 @@ const indexPublishedRecipes = (req, res, next) => {
     data.forEach((recipe) => {
       recipe.title = he.decode(recipe.title);
       recipe.intro = he.decode(recipe.intro);
+      recipe.quote = he.decode(recipe.quote);
       recipe.steps = recipe.steps.map((step) => he.decode(step));
       recipe.ingredients = recipe.ingredients.map((ingredient) =>
         he.decode(ingredient)
@@ -56,13 +58,14 @@ const createRecipe = [
   body('steps.*').escape(),
 
   (req, res, next) => {
+    console.log(req.body);
     const errors = validationResult(req);
     const recipe = new Recipe({
       title: req.body.title,
       ingredients: JSON.parse(req.body.ingredients),
       steps: JSON.parse(req.body.steps),
       is_published: req.body.is_published,
-      publish_date: req.body.is_published === true ? Date.now() : null,
+      publish_date: req.body.is_published === 'true' ? Date.now() : null,
       image: req.file === undefined ? '' : req.file.location
     })
     if (!errors.isEmpty()) {
@@ -71,6 +74,7 @@ const createRecipe = [
     }
     else {
       req.body.intro ? (recipe.intro = req.body.intro) : null;
+      req.body.quote ? (recipe.quote = req.body.quote) : null;
       recipe.save(function(err) {
         console.log('saving');
         if (err) { 
@@ -109,6 +113,7 @@ const updateRecipe = [
       _id: req.params.id
     });
     req.body.intro ? (recipe.intro = req.body.intro) : null;
+    req.body.quote ? (recipe.quote = req.body.quote) : null;
     if (!errors.isEmpty()) {
       res.send(errors.array());
       return;
@@ -140,7 +145,6 @@ export default {
   indexRecipes,
   indexPublishedRecipes,
   createRecipe,
-
   updateRecipe,
   destroyRecipe,
   showRecipe

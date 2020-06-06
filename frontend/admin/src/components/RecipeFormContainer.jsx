@@ -12,6 +12,7 @@ function RecipeFormContainer() {
     ingredients: [''],
     steps: [''],
     intro: '',
+    quote: '',
     image: null,
     is_published: false,
     created: ''
@@ -40,6 +41,7 @@ function RecipeFormContainer() {
         ingredients: recipe.ingredients,
         steps: recipe.steps,
         intro: recipe.intro,
+        quote: recipe.quote,
         image: recipe.image,
         is_published: recipe.is_published,
         created: recipe.created
@@ -64,6 +66,7 @@ function RecipeFormContainer() {
     formData.append('ingredients', JSON.stringify(data.ingredients));
     formData.append('steps', JSON.stringify(data.steps));
     formData.append('intro', data.intro);
+    formData.append('quote', data.quote);
     formData.append('is_published', data.is_published);
     fetch('/recipes', {
       method: 'POST',
@@ -93,6 +96,7 @@ function RecipeFormContainer() {
     formData.append("ingredients", JSON.stringify(data.ingredients));
     formData.append("steps", JSON.stringify(data.steps));
     formData.append("intro", data.intro);
+    formData.append("quote", data.quote);
     formData.append("is_published", data.is_published);
     fetch(`/recipes/${recipeid}`, {
       method: 'PUT',
