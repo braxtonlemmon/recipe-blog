@@ -46,8 +46,8 @@ function Footer() {
     <Wrapper>
       <Links>
         <Link to='/'>Recipes</Link> -
-        <Link to='/about'>About</Link> -
-        <Link to='/contact'>Contact</Link>
+        <Link to='/About'>About</Link> -
+        <Link to='/Contact'>Contact</Link>
       </Links>
       <Copyright>
         <span role="img" aria-label="copyright">©</span>
