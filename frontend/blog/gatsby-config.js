@@ -1,3 +1,7 @@
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
+
 module.exports = {
   siteMetadata: {
     title: `recipe blog`,
@@ -5,7 +9,6 @@ module.exports = {
     author: `@gatsbyjs`,
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -13,8 +16,6 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -24,9 +25,32 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
-    'gatsby-plugin-styled-components',
+    {
+      resolve: "gatsby-source-mongodb",
+      options: {
+        dbName: "test",
+        collection: "recipes",
+        server: {
+          address: "cluster0-shard-00-00-hhm0q.mongodb.net",
+          port: 27017
+        },
+        auth: {
+          user: process.env.GATSBY_MONGO_USERNAME,
+          password: process.env.GATSBY_MONGO_PASSWORD,
+        },
+        extraParams: {
+          replicaSet: 'cluster0-shard-0',
+          ssl: true,
+          authSource: 'admin',
+          retryWrites: true
+        }
+      },
+    },
+    `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-sharp`,
+    "gatsby-plugin-styled-components",
+    `gatsby-transformer-sharp`,
   ],
 }
