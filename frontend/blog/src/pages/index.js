@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-// import RecipeCard from './RecipeCard';
 import { Link, graphql } from 'gatsby';
 import RecipeCard from '../components/RecipeCard';
 
@@ -16,15 +15,15 @@ const Wrapper = styled.ul`
   }
 `;
 
-function IndexPage(props) {
-  const recipes = props.data.allMongodbTestRecipes.edges;
+function IndexPage({ data }) {
+  const recipes = data.allMongodbTestRecipes.edges;
 
   return (
     <Wrapper>
-      {recipes.map((recipe) => (
-        <Link key={recipe.node.id} to='#'>
-          <li key={`list~${recipe.node.id}`}>
-            <RecipeCard recipe={recipe.node} key={`card~${recipe.id}`} />
+      {recipes.map(({node}) => (
+        <Link key={node.id} to={`/recipe/${node.id}`}>
+          <li key={`list~${node.id}`}>
+            <RecipeCard recipe={node} key={`card~${node.id}`} />
           </li>
         </Link>
       ))}
@@ -40,11 +39,8 @@ export const pageQuery = graphql`
       edges {
         node {
           title
-          created
           quote
-          steps
           is_published
-          intro
           image
           id
         }
