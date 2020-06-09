@@ -160,13 +160,15 @@ const Step = styled.li`
     align-items: center;
     cursor: pointer;
     text-decoration: ${props => props.done ? 'line-through' : 'none'};
+    color: ${props => props.done ? 'grey' : 'black'};
   }
 
 
 
   input:checked + label {
-    color: lightgrey;
+    color: grey;
   }
+  
   @media (min-width: 1000px) {
     width: 66vw;
   }

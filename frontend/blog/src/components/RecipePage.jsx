@@ -15,7 +15,16 @@ import {
 function RecipePage({ data }) {
   const recipe = data.mongodbTestRecipes;
   const [ingredientsFixed, setIngredientsFixed] = useState(false);
-  const [checkboxes, setCheckboxes] = useState({});
+  const [checkboxes, setCheckboxes] = useState(loadCheckboxes());
+
+  function loadCheckboxes() {
+    if (typeof window !== 'undefined') {
+      const storedData = JSON.parse(localStorage.getItem(recipe.id));
+      return storedData === null ? {} : storedData;
+    } else {
+      return {};
+    }
+  }
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem(recipe.id));
@@ -25,6 +34,7 @@ function RecipePage({ data }) {
       setCheckboxes({...storedData})
     }
   }, [])
+
 
   useEffect(() => {
     const isWindow = typeof window !== 'undefined';
@@ -46,9 +56,10 @@ function RecipePage({ data }) {
 
   function handleCheck(e) {
     const storedData = JSON.parse(localStorage.getItem(recipe.id));
-    console.log(localStorage);
+    console.log(e.target.id);
     storedData[e.target.id] = e.target.checked;
     localStorage.setItem(recipe.id, JSON.stringify(storedData));
+    console.log(storedData);
     setCheckboxes(storedData);
   }
 
@@ -64,12 +75,16 @@ function RecipePage({ data }) {
         <H2>Ingredients</H2>
         <ul>
           {recipe.ingredients.map((ingredient, index) => (
-            <Ingredient key={ingredient}>
+            <Ingredient   
+              key={ingredient}
+              done={checkboxes[`ingredient-checkbox-${index}`]}
+              checkboxes={checkboxes}
+            >
               <input
                 className="checkbox"
                 type="checkbox"
                 id={`ingredient-checkbox-${index}`}
-                defaultChecked={checkboxes[`ingredient-checkbox-${index}`] === true ? true : false}
+                defaultChecked={checkboxes[`ingredient-checkbox-${index}`] === true}
                 onChange={handleCheck}
               ></input>
               <p>{ingredient}</p>
