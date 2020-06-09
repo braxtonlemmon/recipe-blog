@@ -4,6 +4,7 @@ const GlobalStyle = createGlobalStyle`
   body, html {
     box-sizing: border-box;
     font-family: 'Special Elite', cursive;
+    height: 100%;
   }
 
   body {
@@ -21,7 +22,6 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     color: black;
   }
-
 `;
 
 export default GlobalStyle;

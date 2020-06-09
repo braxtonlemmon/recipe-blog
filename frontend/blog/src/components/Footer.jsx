@@ -5,7 +5,6 @@ import { Link } from 'gatsby';
 const Wrapper = styled.footer`
   background: #754c4ccf;
   width: 100%;
-  flex-shrink: 0;
   color: white;
   padding: 15px;
   display: flex;
@@ -13,9 +12,7 @@ const Wrapper = styled.footer`
   justify-content: center;
   align-items: center;
   text-align: center;
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  grid-area: footer;
 `;
 
 const Links = styled.div`

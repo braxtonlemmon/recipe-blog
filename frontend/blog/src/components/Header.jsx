@@ -4,7 +4,6 @@ import { Link } from 'gatsby';
 import { H1 } from './Headings';
 
 const HeaderBar = styled.div`
-  flex-shrink: 0;
   position: fixed;
   top: 0;
   left: 0;
@@ -16,6 +15,7 @@ const HeaderBar = styled.div`
   justify-content: space-between;
   border-bottom: 3px dashed black;
   z-index: 10;
+  grid-area: header;
 `;
 
 const MyH1 = styled(H1)`

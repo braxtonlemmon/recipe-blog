@@ -5,22 +5,24 @@ import Header from './Header';
 import Footer from './Footer';
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
   min-height: 100vh;
-  align-items: stretch;
-  position: relative;
 `
 
 const Main = styled.main`
+  margin-top: 4em;
+  padding-bottom: 3em;
   display: flex;
-  margin-top: 5em;
   justify-content: center;
   height: 100%;
   width: 100%;
-  margin-bottom: 5em;
-  flex-shrink: 0;
-  flex-grow: 1;
+
+  grid-area: main;
 `;
 
 const Layout = ({ children }) => {
