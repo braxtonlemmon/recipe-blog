@@ -7,8 +7,9 @@ import Footer from './Footer';
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  min-height: 100vh;
   align-items: stretch;
+  position: relative;
 `
 
 const Main = styled.main`
@@ -17,7 +18,7 @@ const Main = styled.main`
   justify-content: center;
   height: 100%;
   width: 100%;
-  margin-bottom: 3.5em;
+  margin-bottom: 5em;
   flex-shrink: 0;
   flex-grow: 1;
 `;

@@ -3,10 +3,10 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const viewportContext = createContext({});
 
 export const ViewportProvider = ({ children }) => {
-  const isWindow = window !== 'undefined';
+  const isWindow = typeof window !== 'undefined';
 
   const [width, setWidth] = useState(
-    typeof isWindow ? window.innerWidth : null
+    isWindow ? window.innerWidth : null
   );
   const [height, setHeight] = useState(
     isWindow ? window.innerHeight : null
