@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Img from 'gatsby-image';
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,6 +33,9 @@ const Image = styled.div`
   background-image: url(${props => props.url});
   background-size: cover;
   background-position: center;
+  .thumbnail-image {
+    height: 100%;
+  }
 `
 
 const Quote = styled.div`
@@ -62,7 +66,15 @@ function RecipeCard({ recipe }) {
   return (
     <Wrapper onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave} onFocus={handleMouseOver}>
       <H2>{recipe.title}</H2>
-      <Image url={recipe.image}></Image>
+      <Image>
+        {recipe.mainImage && (
+          <Img
+            className="thumbnail-image"
+            fluid={recipe.mainImage.childImageSharp.fluid}
+            alt={recipe.title}
+          />
+        )}
+      </Image>
       <Quote isMouseOver={isMouseOver}>
         <p>{recipe.quote}</p>
       </Quote>

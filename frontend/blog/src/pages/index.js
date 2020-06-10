@@ -43,6 +43,13 @@ export const pageQuery = graphql`
           is_published
           image
           id
+          mainImage {
+            childImageSharp {
+              fluid {
+                ...GatsbyImageSharpFluid
+              }
+            }
+          }
         }
       }
     }

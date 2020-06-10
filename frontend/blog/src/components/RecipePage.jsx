@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { graphql } from 'gatsby';
+import Img from 'gatsby-image';
 import { H2 } from './Headings';
 import {
   Wrapper,
@@ -67,6 +68,15 @@ function RecipePage({ data }) {
     <Wrapper>
       <MyH1>{recipe.title}</MyH1>
       <Image url={recipe.image}></Image>
+      <Image>
+        {recipe.mainImage && (
+          <Img
+            className="main-image"
+            fluid={recipe.mainImage.childImageSharp.fluid}
+            alt={recipe.title}
+          />
+        )}
+      </Image>
       <AboutBox>
         <H2>About</H2>
         <p>{recipe.intro}</p>
@@ -130,6 +140,13 @@ export const pageQuery = graphql`
       ingredients
       intro
       steps
+      mainImage {
+        childImageSharp {
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
     }
   }
 `;

@@ -77,17 +77,20 @@ const MyH1 = styled(H1)`
 `
 
 const Image = styled.div`
-  background-image: url(${(props) => props.url});
+  /* background-image: url(${(props) => props.url}); */
   grid-area: pic;
   height: 250px;
   width: 250px;
-  background-size: cover;
-  background-position: center;
+  /* background-size: cover; */
+  /* background-position: center; */
   box-shadow: -12px 7px 2px #383838, 12px 12px 2px #5c5c5c;
   margin: 20px;
   @media (min-width: 600px) {
     height: 500px;
     width: 500px;
+  }
+  .main-image {
+    height: 100%;
   }
 `;
 
