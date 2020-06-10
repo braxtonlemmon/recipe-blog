@@ -11,7 +11,6 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     overflow-y: scroll;
-
   }
 
   * {

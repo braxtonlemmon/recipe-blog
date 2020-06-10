@@ -59,6 +59,15 @@ module.exports = {
         display: `minimal-ui`,
       },
     },
+    {
+      resolve: 'gatsby-plugin-google-fonts',
+      options: {
+        fonts: [
+          'Special Elite',
+          'Josefin Sans'
+        ]
+      }
+    },
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-sharp`,
     "gatsby-plugin-styled-components",
