@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import { H2 } from './Headings';
+import SEO from '../components/seo';
 import {
   Wrapper,
   AboutBox,
@@ -65,67 +66,70 @@ function RecipePage({ data }) {
   }
 
   return (
-    <Wrapper>
-      <MyH1>{recipe.title}</MyH1>
-      <Image url={recipe.image}></Image>
-      <Image>
-        {recipe.mainImage && (
-          <Img
-            className="main-image"
-            fluid={recipe.mainImage.childImageSharp.fluid}
-            alt={recipe.title}
-          />
-        )}
-      </Image>
-      <AboutBox>
-        <H2>About</H2>
-        <p>{recipe.intro}</p>
-      </AboutBox>
-      <IngredientsBox fixed={ingredientsFixed} id="ingredients-box">
-        <H2>Ingredients</H2>
-        <ul>
-          {recipe.ingredients.map((ingredient, index) => (
-            <Ingredient   
-              key={ingredient}
-              done={checkboxes[`ingredient-checkbox-${index}`]}
-              checkboxes={checkboxes}
-            >
-              <input
-                className="checkbox"
-                type="checkbox"
-                id={`ingredient-checkbox-${index}`}
-                defaultChecked={checkboxes[`ingredient-checkbox-${index}`] === true}
-                onChange={handleCheck}
-              ></input>
-              <p>{ingredient}</p>
-            </Ingredient>
-          ))}
-        </ul>
-      </IngredientsBox>
-      <StepsBox id="steps-box">
-        <H2>Steps</H2>
-        <p className='sidenote'>***click each step as you go to keep track of your progress***</p>
-        <ul>
-          {recipe.steps.map((step, index) => (
-            <Step
-              key={step}
-              done={checkboxes[`step-checkbox-${index}`]}
-            >
-              <div className="step-box-holder">
+    <>
+      <SEO title={recipe.title} description={recipe.intro} />
+      <Wrapper>
+        <MyH1>{recipe.title}</MyH1>
+        <Image url={recipe.image}></Image>
+        <Image>
+          {recipe.mainImage && (
+            <Img
+              className="main-image"
+              fluid={recipe.mainImage.childImageSharp.fluid}
+              alt={recipe.title}
+            />
+          )}
+        </Image>
+        <AboutBox>
+          <H2>About</H2>
+          <p>{recipe.intro}</p>
+        </AboutBox>
+        <IngredientsBox fixed={ingredientsFixed} id="ingredients-box">
+          <H2>Ingredients</H2>
+          <ul>
+            {recipe.ingredients.map((ingredient, index) => (
+              <Ingredient   
+                key={ingredient}
+                done={checkboxes[`ingredient-checkbox-${index}`]}
+                checkboxes={checkboxes}
+              >
                 <input
+                  className="checkbox"
                   type="checkbox"
-                  id={`step-checkbox-${index}`}
-                  defaultChecked={checkboxes[`step-checkbox-${index}`] === true ? true : false}
+                  id={`ingredient-checkbox-${index}`}
+                  defaultChecked={checkboxes[`ingredient-checkbox-${index}`] === true}
                   onChange={handleCheck}
                 ></input>
-                <label className="step-number" htmlFor={`step-checkbox-${index}`}>{index + 1}</label>
-              </div>
-              <label className="step-text" htmlFor={`step-checkbox-${index}`}>{step}</label>
-            </Step>
-          ))}
-        </ul>
-      </StepsBox>
-    </Wrapper>
+                <p>{ingredient}</p>
+              </Ingredient>
+            ))}
+          </ul>
+        </IngredientsBox>
+        <StepsBox id="steps-box">
+          <H2>Steps</H2>
+          <p className='sidenote'>***click each step as you go to keep track of your progress***</p>
+          <ul>
+            {recipe.steps.map((step, index) => (
+              <Step
+                key={step}
+                done={checkboxes[`step-checkbox-${index}`]}
+              >
+                <div className="step-box-holder">
+                  <input
+                    type="checkbox"
+                    id={`step-checkbox-${index}`}
+                    defaultChecked={checkboxes[`step-checkbox-${index}`] === true ? true : false}
+                    onChange={handleCheck}
+                  ></input>
+                  <label className="step-number" htmlFor={`step-checkbox-${index}`}>{index + 1}</label>
+                </div>
+                <label className="step-text" htmlFor={`step-checkbox-${index}`}>{step}</label>
+              </Step>
+            ))}
+          </ul>
+        </StepsBox>
+      </Wrapper>
+    </>
   )
 }
 
