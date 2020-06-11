@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import { H1 } from './Headings';
 import styled from 'styled-components';
 

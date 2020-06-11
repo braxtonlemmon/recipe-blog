@@ -12,19 +12,27 @@ export const ViewportProvider = ({ children }) => {
     isWindow ? window.innerHeight : null
   );
 
-  const handleWindowResize = () => {
-    if (isWindow) {
-      setWidth(window.innerWidth);
-      setHeight(window.innerHeight);
-    }
-  }
-
+  
+  // const handleWindowResize = () => {
+  //   if (isWindow) {
+  //     setWidth(window.innerWidth);
+  //     setHeight(window.innerHeight);
+  //   }
+  // }
   useEffect(() => {
+    const handleWindowResize = () => {
+      if (isWindow) {
+        setWidth(window.innerWidth)
+        setHeight(window.innerHeight)
+      }
+    }
+    
     if (isWindow) {
+      
       window.addEventListener('resize', handleWindowResize);
     }
     return () => isWindow ? window.removeEventListener('resize', handleWindowResize) : null;
-  }, []);
+  }, [isWindow]);
 
   return (
     <viewportContext.Provider value={{ width, height }}>

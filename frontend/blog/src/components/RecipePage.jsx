@@ -36,7 +36,7 @@ function RecipePage({ data }) {
     } else {
       setCheckboxes({...storedData})
     }
-  }, [])
+  }, [recipe.id])
 
 
   useEffect(() => {

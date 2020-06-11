@@ -15,7 +15,7 @@ function Comments({ mongodb_id }) {
       .then(() => setCommentsLoaded(true))
       .catch(err => console.error('Request failed', err));
       return () => abortController.abort();
-  }, [commentsLoaded])
+  }, [commentsLoaded, mongodb_id])
 
   return (
     <>

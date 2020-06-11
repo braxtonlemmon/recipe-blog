@@ -69,7 +69,7 @@ function CommentFormComponent(props) {
         onClick={props.handleSubmit}
       >
         Submit
-        </button>
+      </button>
 
     </FormWrapper>
 
