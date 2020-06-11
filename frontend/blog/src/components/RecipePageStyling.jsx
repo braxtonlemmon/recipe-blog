@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   display: grid;
   justify-items: center;
   align-items: baseline;
-
+  padding-bottom: 25px;
   width: 90%;
   grid-template-areas:
     "title"

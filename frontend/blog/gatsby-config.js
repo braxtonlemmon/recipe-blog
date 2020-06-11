@@ -1,7 +1,7 @@
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
-
+const { createProxyMiddleware } = require('http-proxy-middleware')
 module.exports = {
   siteMetadata: {
     title: `recipe blog`,
@@ -73,4 +73,12 @@ module.exports = {
     "gatsby-plugin-styled-components",
     `gatsby-transformer-sharp`,
   ],
+  developMiddleware: app => {
+    app.use(
+      "/api",
+      createProxyMiddleware({
+        target: "http://localhost:9000",
+      })
+    )
+  }
 }

@@ -12,6 +12,7 @@ import passport from 'passport';
 import cors from 'cors';
 
 const app = express();
+const apiRoutes = require('./middleware/api.js');
 
 // Setup mongoose connection
 require('./config/database');
@@ -27,7 +28,8 @@ app.use(passport.initialize());
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'http://localhost:3001'
+    'http://localhost:3001',
+    'http://localhost:8000',
   ],
   credentials: true
 }));
@@ -39,27 +41,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 // Routes
-app.get('/test', (req, res) => {
-  res.json({ message: 'pass!' });
-});
+app.use('/api', apiRoutes)
 app.use('/users',     routes.users);
 app.use('/recipes', routes.recipes);
 app.use('/auth', routes.auth);
 app.use('/comments',  routes.comments);
-app.get('/protected', passport.authenticate('jwt', { session: false }), (req, res) => {
-  console.log('yo you made it');
-  console.log(req.user);
-  // res.send('yo you made it');
-  res.json({ user: req.user });
-})
-app.get('/unprotected', (req, res) => {
-  res.send('coolio man');
-});
-// app.get('/protected', (req, res) => {
-//   console.log('yo you made it');
-//   res.send('yo you made it');
-// })
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
+import Comments from './Comments';
 import { H2 } from './Headings';
 import SEO from '../components/seo';
 import {
@@ -128,6 +129,9 @@ function RecipePage({ data }) {
             ))}
           </ul>
         </StepsBox>
+        <Comments
+          mongodb_id={recipe.mongodb_id}
+        />
       </Wrapper>
     </>
   )
@@ -139,6 +143,7 @@ export const pageQuery = graphql`
   query($id: String!) {
     mongodbTestRecipes(id: { eq: $id }) {
       id
+      mongodb_id
       title
       image
       ingredients
