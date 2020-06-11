@@ -10,6 +10,7 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             id
+            title
           }
         }
       }
@@ -19,8 +20,9 @@ exports.createPages = async ({ graphql, actions }) => {
   const pageTemplate = path.resolve('./src/components/RecipePage.jsx');
 
   for (const { node } of data.recipes.edges) {
+    const title = node.title.toLowerCase().replace(/ /g, '-');
     createPage({
-      path: `/recipe/${node.id}/`,
+      path: `/recipe/${title}/`,
       component: pageTemplate,
       context: {
         id: node.id,
