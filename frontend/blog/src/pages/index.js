@@ -22,12 +22,14 @@ function IndexPage({ data }) {
     <Wrapper>
       {recipes.map(({node}) => {
         const slug = node.title.toLowerCase().replace(/ /g, '-');
-        return (
-        <Link key={node.id} to={`/recipe/${slug}`}>
-          <li key={`list~${node.id}`}>
-            <RecipeCard recipe={node} key={`card~${node.id}`} />
-          </li>
-        </Link>)
+        if (node.is_published) {
+          return (
+            <Link key={node.id} to={`/recipe/${slug}`}>
+              <li key={`list~${node.id}`}>
+                <RecipeCard recipe={node} key={`card~${node.id}`} />
+              </li>
+            </Link>)
+          }
       })}
     </Wrapper>
   )
