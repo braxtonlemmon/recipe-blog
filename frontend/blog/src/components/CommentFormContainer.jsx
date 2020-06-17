@@ -18,7 +18,8 @@ function CommentFormContainer({ mongodb_id, setCommentsLoaded }) {
       return alert('wrongo');
     }
     setData({ name: '', content: '' });
-    fetch('/api/comments/', {
+    // fetch('/api/comments/', {
+    fetch('https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/comments', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

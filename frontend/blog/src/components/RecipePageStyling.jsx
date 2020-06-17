@@ -47,9 +47,11 @@ const IngredientsBox = styled(InfoBox)`
     ${props => {
     if (props.fixed) {
       return `
-        position: fixed;
-        top: 50;
-        width: 17.1vw;
+        // position: fixed;
+        // top: 50;
+        // width: 17.1vw;
+        position: sticky;
+        top: 50px;
         `
     }
   }}

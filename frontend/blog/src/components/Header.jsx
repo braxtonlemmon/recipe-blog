@@ -57,7 +57,7 @@ function Header() {
   return (
     <HeaderBar>
       <Link to='/'>
-        <MyH1>decoded recipes</MyH1>
+        <MyH1>Flat Out Cooking</MyH1>
       </Link>
       <Buttons>
         <Link to='/'><Button>Recipes</Button></Link>

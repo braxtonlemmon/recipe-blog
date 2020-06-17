@@ -46,6 +46,7 @@ exports.onCreateNode = async ({
     node.internal.type === 'mongodbTestRecipes' &&
     node.image !== null
   ) {
+    console.log(node.image);
     let fileNode = await createRemoteFileNode({
       url: node.image,
       parentNodeId: node.id,

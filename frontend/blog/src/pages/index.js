@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link, graphql } from 'gatsby';
 import RecipeCard from '../components/RecipeCard';
+import SEO from '../components/seo';
 
 const Wrapper = styled.ul`
   display: flex;
@@ -19,19 +20,22 @@ function IndexPage({ data }) {
   const recipes = data.allMongodbTestRecipes.edges;
 
   return (
-    <Wrapper>
-      {recipes.map(({node}) => {
-        const slug = node.title.toLowerCase().replace(/ /g, '-');
-        if (node.is_published) {
-          return (
-            <Link key={node.id} to={`/recipe/${slug}`}>
-              <li key={`list~${node.id}`}>
-                <RecipeCard recipe={node} key={`card~${node.id}`} />
-              </li>
-            </Link>)
-          }
-      })}
-    </Wrapper>
+    <>
+      <SEO title="Home" description="Catalog of recipes" />
+      <Wrapper>
+        {recipes.map(({node}) => {
+          const slug = node.title.toLowerCase().replace(/ /g, '-');
+          if (node.is_published) {
+            return (
+              <Link key={node.id} to={`/recipe/${slug}`}>
+                <li key={`list~${node.id}`}>
+                  <RecipeCard recipe={node} key={`card~${node.id}`} />
+                </li>
+              </Link>)
+            }
+          })}
+      </Wrapper>
+    </>
   )
 }
 

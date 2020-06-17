@@ -4,7 +4,7 @@ require('dotenv').config({
 const { createProxyMiddleware } = require('http-proxy-middleware')
 module.exports = {
   siteMetadata: {
-    title: `recipe blog`,
+    title: `Recipe Blog`,
     description: `A blog with all my recipes`,
     author: `Braxton Lemmon`,
   },
@@ -16,17 +16,17 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
-    {
-      resolve: '@robinmetral/gatsby-source-s3',
-      options: {
-        aws: {
-          accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-          region: process.env.AWS_REGION,
-        },
-        buckets: ['remember-to-cook'],
-      }
-    },
+    // {
+    //   resolve: '@robinmetral/gatsby-source-s3',
+    //   options: {
+    //     aws: {
+    //       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    //       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    //       region: process.env.AWS_REGION,
+    //     },
+    //     buckets: ['remember-to-cook'],
+    //   }
+    // },
     {
       resolve: "gatsby-source-mongodb",
       options: {

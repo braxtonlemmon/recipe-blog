@@ -9,11 +9,12 @@ function Comments({ mongodb_id }) {
   useEffect(() => {
     const abortController = new AbortController();
     
-    fetch(`/api/comments/${mongodb_id}`, { signal: abortController.signal })
+    // fetch(`/api/comments/${mongodb_id}`, { signal: abortController.signal })
+    fetch(`https://cauk2n799k.execute-api.eu-west-1.amazonaws.com/dev/api/comments/${mongodb_id}`, { signal: abortController.signal })
       .then(result => result.json())
       .then(data => setComments(data.data))
       .then(() => setCommentsLoaded(true))
-      .catch(err => console.error('Request failed', err));
+      .catch(err => console.error("Request failed", err))
       return () => abortController.abort();
   }, [commentsLoaded, mongodb_id])
 
