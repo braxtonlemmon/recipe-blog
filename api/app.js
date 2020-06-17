@@ -11,6 +11,7 @@ import routes from './routes';
 import passport from 'passport';
 import cors from 'cors';
 
+const serverless = require('serverless-http');
 const app = express();
 const apiRoutes = require('./middleware/api.js');
 
@@ -48,7 +49,10 @@ app.use('/users',     routes.users);
 app.use('/recipes', routes.recipes);
 app.use('/auth', routes.auth);
 app.use('/comments',  routes.comments);
-
+app.get("/hey", passport.authenticate("jwt", { session: false }), (req, res, next) => {
+  console.log(req.user);
+  res.send('yay');
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -66,4 +70,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
+module.exports.handler = serverless(app);

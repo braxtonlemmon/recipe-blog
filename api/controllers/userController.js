@@ -47,9 +47,14 @@ const showUser = (req, res, next) => {
     })
 }
 
+const getUser = (req, res, next) => {
+  console.log('yo');
+}
+
 export default {
   createUser,
   updateUser,
   destroyUser,
   showUser,
+  getUser
 }

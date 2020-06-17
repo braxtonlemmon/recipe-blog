@@ -49,12 +49,13 @@ const createComment = [
 ];
 
 const destroyComment = (req, res, next) => {
+  console.log(req.params);
   Comment.findById(req.params.id)
   .exec((err, comment) => {
     if (err) {
       return next(err);
     }
-    Comment.findByIdAndRemove(req.body.commentid, function deleteComment(err) {
+    Comment.findByIdAndRemove(req.params.id, function deleteComment(err) {
       if (err) {
         return next(err);
       }
