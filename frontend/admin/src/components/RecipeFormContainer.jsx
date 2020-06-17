@@ -13,7 +13,7 @@ function RecipeFormContainer() {
     steps: [''],
     intro: '',
     quote: '',
-    image: null,
+    image: '',
     is_published: false,
     created: ''
   })
@@ -58,21 +58,22 @@ function RecipeFormContainer() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let formData = new FormData();
-    const image = document.getElementById('image');
-
-    formData.append('image', image.files[0]);
-    formData.append('title', data.title);
-    formData.append('ingredients', JSON.stringify(data.ingredients));
-    formData.append('steps', JSON.stringify(data.steps));
-    formData.append('intro', data.intro);
-    formData.append('quote', data.quote);
-    formData.append('is_published', data.is_published);
     fetch('/recipes', {
       method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
       credentials: 'include',
-      body: formData,
-
+      body: JSON.stringify({
+        title: data.title,
+        ingredients: JSON.stringify(data.ingredients),
+        steps: JSON.stringify(data.steps),
+        intro: data.intro,
+        image: data.image,
+        quote: data.quote,
+        is_published: data.is_published
+      })
     })
     .then(response => {
       if (response.ok && response.status === 200) {
@@ -88,20 +89,23 @@ function RecipeFormContainer() {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    let formData = new FormData();
-    const image = document.getElementById('image');
-
-    formData.append("image", image.files[0]);
-    formData.append("title", data.title);
-    formData.append("ingredients", JSON.stringify(data.ingredients));
-    formData.append("steps", JSON.stringify(data.steps));
-    formData.append("intro", data.intro);
-    formData.append("quote", data.quote);
-    formData.append("is_published", data.is_published);
+    // let formData = new FormData();
     fetch(`/recipes/${recipeid}`, {
       method: 'PUT',
       credentials: 'include',
-      body: formData,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title: data.title,
+        ingredients: JSON.stringify(data.ingredients),
+        steps: JSON.stringify(data.steps),
+        intro: data.intro,
+        image: data.image,
+        quote: data.quote,
+        is_published: data.is_published
+      })
     })
     .then(response => {
       if (response.ok && response.status === 200) {

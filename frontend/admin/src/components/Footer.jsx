@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+// import { isLoggedIn } from '../utils/Utils';
 
 const FooterBar = styled.footer`
   width: 100%;
@@ -17,7 +18,7 @@ const FooterBar = styled.footer`
 function Footer(props) {
   return (
     <FooterBar>
-      <p>{props.currentUser ? `Logged in as: ${props.currentUser}` : 'Please login'}</p>
+      <p>{ props.isLoggedIn ? `Welcome back ${props.currentUser}` : 'Please login'}</p>
     </FooterBar>
   )
 }

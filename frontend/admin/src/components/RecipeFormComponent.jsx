@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { H1 } from './Shared';
 import {
-  ImageInput,
   Form,
   Row,
   RowTop,
@@ -19,15 +18,18 @@ function RecipeFormComponent(props) {
   return (
     <>
     <H1>New Recipe</H1>
-    <ImageInput>
-      <label htmlFor="image">Image</label>
-      <input
-        type="file"
-        id="image"
-        name="image"
-      />
-    </ImageInput>
     <Form name="recipeForm">
+      <Box>
+        <label htmlFor="image">Image</label>
+        <input
+          type="text"
+          id="image"
+          name="image"
+          placeholder="Image url"
+          value={props.data.image}
+          onChange={props.handleChange}
+        />
+      </Box>
       <Box>
         <label htmlFor="title">Title</label>
         <input
@@ -152,7 +154,8 @@ function RecipeFormComponent(props) {
         Submit
       </Button>
     </Form>
-    <form id="upload_form" enctype="multipart/form-data"></form>
+    <form id="upload_form"></form>
+    {/* <form id="upload_form" enctype="multipart/form-data"></form> */}
     </>
   );
 }

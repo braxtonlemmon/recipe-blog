@@ -6,6 +6,7 @@ import GlobalStyle from './GlobalStyle';
 import Header from './components/Header';
 import Routing from './components/Routing';
 import Footer from './components/Footer';
+import Cookies from 'js-cookie';
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,27 +32,35 @@ function App() {
     setIsLoggedIn(true);
     setCurrentUser(name);
   }
+
+  useEffect(() => {
+    fetch('/me', {
+      credentials: 'include',
+      method: 'GET'
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw "Not yet logged in";
+      }})
+    .then(data => {
+      if (data.user) {
+        setIsLoggedIn(true);
+        setCurrentUser(data.user);
+      }
+    })
+    .catch(err => console.log('problem'));
+  }, [])
   
   const handleLogout = () => {
     fetch('/auth/logout')
     .then(() => {
-      setCurrentUser(false);
       setIsLoggedIn(false);
+      setCurrentUser(null);
       history.push('/login');
     })
   }
-
-  useEffect(() => {
-    fetch('/protected', {
-      credentials: 'include'
-    })
-    .then(result => result.json())
-    .then(data => {
-      setCurrentUser(data.user.username)
-      setIsLoggedIn(true)
-    })
-    .catch(err => console.log(err));
-  }, [])
 
   return (
     <Wrapper>
@@ -68,6 +77,7 @@ function App() {
         />
       </Main>
       <Footer 
+        isLoggedIn={isLoggedIn}
         currentUser={currentUser}
       />
     </Wrapper>

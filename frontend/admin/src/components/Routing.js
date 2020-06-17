@@ -5,6 +5,7 @@ import RecipeFormContainer from './RecipeFormContainer';
 import Home from './Home';
 import NoMatch from './NoMatch';
 import RecipePage from './RecipePage';
+// import { isLoggedIn } from '../utils/Utils';
 
 import {
   Switch,

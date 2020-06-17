@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { H1, H2 } from './Shared';
 import Button from './shared/Button';
+// import { isLoggedIn } from '../utils/Utils';
 
 const HeaderBar = styled.div`
   flex-shrink: 0;
@@ -45,7 +46,7 @@ function Header(props) {
           </Link>
         </Buttons>
       )}
-      {props.isLoggedIn && (
+      {props.isLoggedIn === true && (
         <Buttons>
           <Link to="/"><Button>Home</Button></Link>
           <Link to="/recipes"><Button>Recipes</Button></Link>
