@@ -1,0 +1,18 @@
+service: express-app
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: eu-west-1
+
+package:
+  exclude:
+    - node_modules/**
+    
+functions:
+  app:
+    handler: app.handler
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
